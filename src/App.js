@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import "@blueprintjs/core/lib/css/blueprint.css";
+import { Button } from "@blueprintjs/core";
+import { createUseStyles } from "react-jss";
+import FirstChart from "./visualizations/TestChar";
+import api from "./lib/api";
+
+const useStyles = createUseStyles({
+  App: {
+    textAlign: "center",
+  },
+  chart: {
+    width: "400px",
+    height: "400px",
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+});
 
 function App() {
+  api.get("/posts").then((data) => {
+    console.log(data);
+  });
+  const styles = useStyles();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.App}>
+      <p>Hello World</p>
+      <Button
+        intent="success"
+        text="Blueprintjs loaded sucessfully"
+        onClick={() => {
+          console.log("clickded");
+        }}
+      />
+      {/* First Chart has the component that expects parent to have certain width and height so setting this using div tag */}
+      <div className={styles.chart}>
+        <FirstChart />
+      </div>
     </div>
   );
 }
