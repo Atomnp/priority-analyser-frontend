@@ -2,10 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { createUseStyles } from "react-jss";
+
+const useStyles = createUseStyles({
+  removeall: {
+    margin: "0",
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App className="removeall" />
   </React.StrictMode>,
   document.getElementById("root")
 );
