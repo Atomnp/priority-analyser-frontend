@@ -2,17 +2,21 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { createUseStyles } from "react-jss";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
-const useStyles = createUseStyles({
-  removeall: {
-    margin: "0",
-  },
+const myTheme = createMuiTheme({
+  // mixins: {
+  //   toolbar: {
+  //     // minHeight: 36,
+  //   },
+  // },
 });
 
 ReactDOM.render(
   <React.StrictMode>
-    <App className="removeall" />
+    <ThemeProvider theme={myTheme}>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

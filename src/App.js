@@ -1,43 +1,63 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
-import NavBar from "./components/NavBar";
 import PredictionPage from "./prediction";
-import AnalysisPage from "./analysis";
-import MyDrawer from "./components/Drawer";
+import Layout from "./components/Layout";
 import { useState } from "react";
-import { Icon } from "@blueprintjs/core";
 
 function App() {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(true);
-  const toggleDrawer = () => {
-    setIsDrawerOpen(!isDrawerOpen);
+  const getSelected = (filters) => {
+    let selected = [];
+    Object.entries(filters).forEach(([key, value]) => {
+      selected.push({ name: key, selected: value["selected"] });
+    });
+    return selected;
   };
+
+  const [filters, setFilters] = useState({
+    college: {
+      list: ["All", "PUL", "PUR"],
+      selected: "All",
+      handleSelect: (college) => {
+        let filtersnew = { ...filters };
+        filtersnew["college"]["selected"] = college;
+        setFilters(filtersnew);
+      },
+    },
+    year: {
+      list: ["All", "2077", "2076"],
+      selected: "All",
+      handleSelect: (year) => {
+        let filtersnew = { ...filters };
+        filtersnew["year"]["selected"] = year;
+        setFilters(filtersnew);
+      },
+    },
+    faculty: {
+      list: ["All", "BCT", "BCE", "BEX", "BEL"],
+      selected: "All",
+      handleSelect: (faculty) => {
+        let filtersnew = { ...filters };
+        filtersnew["faculty"]["selected"] = faculty;
+        setFilters(filtersnew);
+      },
+    },
+  });
+
   return (
     <Router>
-      <div style={{ display: "flex" }}>
-        {!isDrawerOpen && (
-          <Icon
-            icon="menu"
-            onClick={() => {
-              setIsDrawerOpen(!isDrawerOpen);
-            }}
-          ></Icon>
-        )}
-        {isDrawerOpen && (
-          <MyDrawer
-            setIsDrawerOpen={setIsDrawerOpen}
-            toggleDrawer={toggleDrawer}
-            isDrawerOpen={isDrawerOpen}
-          />
-        )}
-        <Switch>
-          <Route path="/" exact>
-            <PredictionPage />
-          </Route>
-          <Route path="/analyze" exact>
-            {/* <TestDrawer /> */}
-          </Route>
-        </Switch>
+      <div>
+        <Layout filters={filters}>
+          <Switch>
+            <Route path="/" exact>
+              <PredictionPage />
+            </Route>
+            <Route path="/predict" exact>
+              <PredictionPage filterData={getSelected(filters)} />
+            </Route>
+            <Route path="/analyse" exact>
+              <h1>I am analysis page</h1>
+            </Route>
+          </Switch>
+        </Layout>
       </div>
     </Router>
   );
