@@ -115,34 +115,39 @@ function ResponsiveDrawer(props) {
             >
               <MenuIcon />
             </IconButton>
-            <svg
-              width="79"
-              height="32"
-              viewBox="0 0 79 52"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M40.2841 45C28.3659 35.1558 11.7955 36.5634 5 40.6652V10.741C19.8977 5.00787 30.4394 9.90204 40.2841 14.6563M40.2841 45C46.0341 40.6186 64.8 31.3523 74 36.61V5.00787C64.4167 4.82143 40.2841 7.94439 40.2841 14.6563M40.2841 45V14.6563"
-                stroke="#DD4C4C"
-                stroke-width="10"
-              />
-            </svg>
+            <Hidden xsDown>
+              <svg
+                width="79"
+                height="32"
+                viewBox="0 0 79 52"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M40.2841 45C28.3659 35.1558 11.7955 36.5634 5 40.6652V10.741C19.8977 5.00787 30.4394 9.90204 40.2841 14.6563M40.2841 45C46.0341 40.6186 64.8 31.3523 74 36.61V5.00787C64.4167 4.82143 40.2841 7.94439 40.2841 14.6563M40.2841 45V14.6563"
+                  stroke="#DD4C4C"
+                  stroke-width="10"
+                />
+              </svg>
+            </Hidden>
+
             <Typography variant="h6" className={classes.title}>
               Rank Analyser
             </Typography>
-            <Link
-              style={{ textDecoration: "none", color: "white" }}
-              to="/predict"
-            >
-              <Button color="inherit">Predict</Button>
-            </Link>
-            <Link
-              style={{ textDecoration: "none", color: "white" }}
-              to="/analyse"
-            >
-              <Button color="inherit">Analyse</Button>
-            </Link>
+            <Hidden xsDown implementation="css">
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to="/predict"
+              >
+                <Button color="inherit">Predict</Button>
+              </Link>
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to="/analyse"
+              >
+                <Button color="inherit">Analyse</Button>
+              </Link>
+            </Hidden>
           </Toolbar>
         </AppBar>
         <nav className={classes.drawer} aria-label="mailbox folders">
@@ -181,10 +186,11 @@ function ResponsiveDrawer(props) {
           {props.children}
         </div>
       </div>
-
-      <div style={{ position: "fixed", bottom: "0", width: "100%" }}>
-        <BottomNav />
-      </div>
+      <Hidden smUp implementation="css">
+        <div style={{ position: "fixed", bottom: "0", width: "100%" }}>
+          <BottomNav />
+        </div>
+      </Hidden>
     </div>
   );
 }

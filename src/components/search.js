@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -12,7 +12,9 @@ import FormControl from "@material-ui/core/FormControl";
 
 const useStyles = makeStyles((theme) => ({
   margin: {
-    width: "90%",
+    [theme.breakpoints.up("md")]: {
+      width: "70%",
+    },
     marginTop: "2rem",
     marginLeft: "auto",
     marginRight: "auto",

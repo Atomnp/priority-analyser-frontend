@@ -7,7 +7,7 @@ import Search from "../components/search";
 
 const useStyles = createUseStyles({
   App: {
-    padding: "3rem",
+    padding: "1rem 0",
     // marginLeft: "auto",
     // marginRight: "auto",
     // textAlign: "center",
