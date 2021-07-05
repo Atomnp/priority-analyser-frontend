@@ -12,6 +12,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Dropdown from "./Dropdown";
+import BottomNav from "./BottomNav";
 
 import { Link } from "react-router-dom";
 
@@ -31,9 +32,10 @@ const useStyles = makeStyles((theme) => {
       },
     },
     appBar: {
+      zIndex: theme.zIndex.drawer + 1,
       [theme.breakpoints.up("sm")]: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
+        // width: `calc(100% - ${drawerWidth}px)`,
+        // marginLeft: drawerWidth,
       },
     },
     menuButton: {
@@ -98,83 +100,90 @@ function ResponsiveDrawer(props) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
-          >
-            <MenuIcon />
-          </IconButton>
-          <svg
-            width="79"
-            height="32"
-            viewBox="0 0 79 52"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M40.2841 45C28.3659 35.1558 11.7955 36.5634 5 40.6652V10.741C19.8977 5.00787 30.4394 9.90204 40.2841 14.6563M40.2841 45C46.0341 40.6186 64.8 31.3523 74 36.61V5.00787C64.4167 4.82143 40.2841 7.94439 40.2841 14.6563M40.2841 45V14.6563"
-              stroke="#DD4C4C"
-              stroke-width="10"
-            />
-          </svg>
-          <Typography variant="h6" className={classes.title}>
-            Rank Analyser
-          </Typography>
-          <Link
-            style={{ textDecoration: "none", color: "white" }}
-            to="/predict"
-          >
-            <Button color="inherit">Predict</Button>
-          </Link>
-          <Link
-            style={{ textDecoration: "none", color: "white" }}
-            to="/analyse"
-          >
-            <Button color="inherit">Analyse</Button>
-          </Link>
-        </Toolbar>
-      </AppBar>
-      <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="css">
-          <Drawer
-            container={container}
-            variant="temporary"
-            anchor={theme.direction === "rtl" ? "right" : "left"}
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-        <Hidden xsDown implementation="css">
-          <Drawer
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            variant="permanent"
-            open
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-      </nav>
-      <div className={classes.content}>
-        <div className={classes.toolbar}></div>
-        {props.children}
+    <div>
+      <div className={classes.root}>
+        <CssBaseline />
+
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+            <svg
+              width="79"
+              height="32"
+              viewBox="0 0 79 52"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M40.2841 45C28.3659 35.1558 11.7955 36.5634 5 40.6652V10.741C19.8977 5.00787 30.4394 9.90204 40.2841 14.6563M40.2841 45C46.0341 40.6186 64.8 31.3523 74 36.61V5.00787C64.4167 4.82143 40.2841 7.94439 40.2841 14.6563M40.2841 45V14.6563"
+                stroke="#DD4C4C"
+                stroke-width="10"
+              />
+            </svg>
+            <Typography variant="h6" className={classes.title}>
+              Rank Analyser
+            </Typography>
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/predict"
+            >
+              <Button color="inherit">Predict</Button>
+            </Link>
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/analyse"
+            >
+              <Button color="inherit">Analyse</Button>
+            </Link>
+          </Toolbar>
+        </AppBar>
+        <nav className={classes.drawer} aria-label="mailbox folders">
+          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+          <Hidden smUp implementation="css">
+            <Drawer
+              container={container}
+              variant="temporary"
+              anchor={theme.direction === "rtl" ? "right" : "left"}
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+          <Hidden xsDown implementation="css">
+            <Drawer
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              variant="permanent"
+              open
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+        </nav>
+        <div className={classes.content}>
+          <div className={classes.toolbar}></div>
+          {props.children}
+        </div>
+      </div>
+
+      <div style={{ position: "fixed", bottom: "0", width: "100%" }}>
+        <BottomNav />
       </div>
     </div>
   );
