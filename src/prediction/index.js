@@ -4,6 +4,7 @@ import { Typography, Button } from "@material-ui/core";
 import { createUseStyles } from "react-jss";
 import api from "../lib/api";
 import Search from "../components/search";
+import { useHistory } from "react-router-dom";
 
 const useStyles = createUseStyles({
   App: {
@@ -24,13 +25,21 @@ const PredictionPage = ({ filterData }) => {
   const [fetching, setFetching] = useState(false);
   const [rank, setRank] = React.useState("");
 
-  const onClickPredict = (prop) => {
+  const history = useHistory();
+  console.log(filterData);
+
+  const onClickPredict = () => {
     /* prepare the form containg, rank and filters for college year and faculty and make post request */
     setFetching(true);
     const data = new FormData();
-    api.post("/predict", data).then((res) => {
+    data.set("college", filterData[0]["selected"]);
+    data.set("faculty", filterData[2]["selected"]);
+    data.set("rank", rank);
+    api.post("/prediction", data).then((res) => {
       console.log(res);
       setFetching(false);
+      console.log("clicked predict");
+      history.push("/result", res.data);
     });
   };
 

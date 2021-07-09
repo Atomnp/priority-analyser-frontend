@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PredictionPage from "./prediction";
 import Layout from "./components/Layout";
 import { useState } from "react";
+import BarChart from "./visualizations/BarChart";
 
 function App() {
   const getSelected = (filters) => {
@@ -48,7 +49,7 @@ function App() {
         <Layout filters={filters}>
           <Switch>
             <Route path="/" exact>
-              <PredictionPage />
+              <PredictionPage filterData={getSelected(filters)} />
             </Route>
             <Route path="/predict" exact>
               <PredictionPage filterData={getSelected(filters)} />
@@ -56,9 +57,11 @@ function App() {
             <Route path="/analyse" exact>
               <h1>I am analysis page</h1>
             </Route>
+            <Route path="/result" exact>
+              <BarChart />
+            </Route>
           </Switch>
         </Layout>
-        
       </div>
     </Router>
   );
