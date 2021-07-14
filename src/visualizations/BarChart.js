@@ -101,8 +101,6 @@ const Example = () => {
       {/* <h1>for rank =123</h1> */}
       <BarChart
         layout="vertical"
-        width={500}
-        height={1000}
         data={data}
         margin={{
           top: 5,
@@ -126,7 +124,7 @@ const Example = () => {
           axisLine={false}
           type="number"
           dataKey="probVal"
-          width={20}
+          ticks={[0, 1, 2, 3, 4, 5]}
         />
         <Tooltip />
         <Legend />
@@ -135,7 +133,6 @@ const Example = () => {
           name="Score"
           background
           dataKey="probVal"
-          fill="#8884d8"
         >
           {data.map((entry, index) => (
             <>
