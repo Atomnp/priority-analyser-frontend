@@ -13,6 +13,7 @@ function App() {
     return selected;
   };
 
+  const [rank, setRank] = useState("");
   const [filters, setFilters] = useState({
     college: {
       list: ["All", "PUL", "PUR"],
@@ -49,16 +50,24 @@ function App() {
         <Layout filters={filters}>
           <Switch>
             <Route path="/" exact>
-              <PredictionPage filterData={getSelected(filters)} />
+              <PredictionPage
+                filterData={getSelected(filters)}
+                rank={rank}
+                setRank={setRank}
+              />
             </Route>
             <Route path="/predict" exact>
-              <PredictionPage filterData={getSelected(filters)} />
+              <PredictionPage
+                filterData={getSelected(filters)}
+                rank={rank}
+                setRank={setRank}
+              />
             </Route>
             <Route path="/analyse" exact>
               <h1>I am analysis page</h1>
             </Route>
             <Route path="/result" exact>
-              <BarChart />
+              <BarChart filterData={getSelected(filters)} rank={rank} />
             </Route>
           </Switch>
         </Layout>

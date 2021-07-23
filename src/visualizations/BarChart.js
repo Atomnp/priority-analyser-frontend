@@ -1,5 +1,6 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import api from "../lib/api";
+import { Button } from "@material-ui/core";
 import {
   BarChart,
   Bar,
@@ -11,51 +12,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-
-const data = [
-  {
-    name: " A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: " B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: " C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: " D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: " E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: " F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: " G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
 
 const foo = (data) => {
   const mapping = {
@@ -85,69 +41,138 @@ const foo = (data) => {
 };
 
 const CustomizedLabel = (props) => {
-  console.log("Customized label", props);
   return <text>{"AAAAAAA"}</text>;
 };
 
-const Example = () => {
-  const history = useHistory();
-  let data = history.location.state;
-  data = foo(data);
-  console.log(data);
-  data = data.slice(0, 10);
-  data.sort((a, b) => (a.probVal > b.probVal ? -1 : 1));
+const Example = ({ filterData, rank }) => {
+  const [data, setData] = useState([]);
+  /* data is shown 10 at a time so this variable helps to determine which frame is that, 
+  for example initionally it is zero and if i press next then data that needs to be 
+  displayed are data no 10 to data no 20 */
+  const [dataFrameNo, setDataFrameNo] = useState(0);
+  const [currentFrame, setCurrentFrame] = useState([]);
+
+  useEffect(() => {
+    const data = new FormData();
+    data.set("college", filterData[0]["selected"]);
+    data.set("faculty", filterData[2]["selected"]);
+    data.set("rank", rank);
+
+    api.post("/prediction", data).then((res) => {
+      setData(foo(res.data));
+
+      setCurrentFrame(
+        foo(res.data).slice(0, 10 > data.length ? data.length : 10)
+      );
+      setDataFrameNo(0);
+    });
+  }, [filterData, rank]);
+
+  // data1 = foo(data);
+  // data1 = data1.slice(0, 10);
+  // data1.sort((a, b) => (a.probVal > b.probVal ? -1 : 1));
+
   return (
-    <ResponsiveContainer width="100%" height={500}>
-      {/* <h1>for rank =123</h1> */}
-      <BarChart
-        layout="vertical"
-        data={data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
+    <div>
+      <ResponsiveContainer width="100%" height={500}>
+        {/* <h1>for rank =123</h1> */}
+        <BarChart
+          layout="vertical"
+          data={currentFrame}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          {/* <CartesianGrid strokeDasharray="3 3" /> */}
+          <YAxis
+            type="category"
+            dataKey="label"
+            width={200}
+            axisLine={false}
+            orientation="right"
+            tick={5}
+          />
+          <XAxis
+            orientation="top"
+            tick={false}
+            axisLine={false}
+            type="number"
+            dataKey="probVal"
+            // ticks={[0, 1, 2, 3, 4, 5]}
+          />
+          <Tooltip />
+          <Legend />
+          <Bar
+            label={<CustomizedLabel />}
+            name="Score"
+            background
+            dataKey="probVal"
+          >
+            {currentFrame.map((entry, index) => (
+              <React.Fragment key={entry["label"]}>
+                <Cell key={entry["label"]} fill={entry.color} />
+                <LabelList
+                  key={entry["label"]}
+                  dataKey="probString"
+                  position="inside"
+                  fill="#ffffff"
+                />
+              </React.Fragment>
+            ))}
+          </Bar>
+          {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
+        </BarChart>
+      </ResponsiveContainer>
+      <div
+        style={{
+          padding: "0 2rem",
+          display: "flex",
+          justifyContent: "space-between",
         }}
       >
-        {/* <CartesianGrid strokeDasharray="3 3" /> */}
-        <YAxis
-          type="category"
-          dataKey="label"
-          width={200}
-          axisLine={false}
-          orientation="right"
-          tick={5}
-        />
-        <XAxis
-          orientation="top"
-          // tick={false}
-          axisLine={false}
-          type="number"
-          dataKey="probVal"
-          ticks={[0, 1, 2, 3, 4, 5]}
-        />
-        <Tooltip />
-        <Legend />
-        <Bar
-          label={<CustomizedLabel />}
-          name="Score"
-          background
-          dataKey="probVal"
+        <Button
+          disabled={dataFrameNo <= 0}
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            if (dataFrameNo > 0) {
+              let a = dataFrameNo - 1;
+              let b = a * 10 + 10;
+              setCurrentFrame(
+                data.slice(a * 10, b > data.length ? data.length : b)
+              );
+              setDataFrameNo(a);
+            }
+          }}
         >
-          {data.map((entry, index) => (
-            <>
-              <Cell fill={entry.color} />
-              <LabelList
-                dataKey="probString"
-                position="inside"
-                fill="#ffffff"
-              />
-            </>
-          ))}
-        </Bar>
-        {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
-      </BarChart>
-    </ResponsiveContainer>
+          Previous
+        </Button>
+        <Button
+          disabled={(dataFrameNo + 1) * 10 > data.length}
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            if ((dataFrameNo + 1) * 10 <= data.length) {
+              let a = dataFrameNo + 1;
+              let b = a * 10 + 10;
+              console.log(a);
+              console.log();
+
+              setCurrentFrame(
+                data.slice(a * 10, b > data.length ? data.length : b)
+              );
+              setDataFrameNo(a);
+              console.log(currentFrame);
+            }
+          }}
+        >
+          Next
+        </Button>
+      </div>
+    </div>
   );
 };
 

@@ -2,9 +2,9 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 import React, { useState } from "react";
 import { Typography, Button } from "@material-ui/core";
 import { createUseStyles } from "react-jss";
-import api from "../lib/api";
+
 import Search from "../components/search";
-import { useHistory } from "react-router-dom";
+import MyChart from "../visualizations/BarChart";
 
 const useStyles = createUseStyles({
   App: {
@@ -21,40 +21,27 @@ const useStyles = createUseStyles({
   },
 });
 
-const PredictionPage = ({ filterData }) => {
-  const [fetching, setFetching] = useState(false);
-  const [rank, setRank] = React.useState("");
-
-  const history = useHistory();
-  console.log(filterData);
-
-  const onClickPredict = () => {
-    /* prepare the form containg, rank and filters for college year and faculty and make post request */
-    setFetching(true);
-    const data = new FormData();
-    data.set("college", filterData[0]["selected"]);
-    data.set("faculty", filterData[2]["selected"]);
-    data.set("rank", rank);
-    api.post("/prediction", data).then((res) => {
-      console.log(res);
-      setFetching(false);
-      console.log("clicked predict");
-      history.push("/result", res.data);
-    });
-  };
-
-  api.get("/programs/").then((data) => {
-    console.log(data);
-  });
-
+const PredictionPage = ({ filterData, rank, setRank }) => {
+  const [showResult, setShowResult] = useState(false);
   const styles = useStyles();
-  return (
+  return showResult ? (
+    <MyChart filterData={filterData} rank={rank} />
+  ) : (
     <div className={styles.App}>
       <Typography align="center" variant="h4">
         Decide fast,Decide smart
-        <Search rank={rank} onRankChange={setRank} />
+        <Search
+          rank={rank}
+          onRankChange={(data) => {
+            setRank(data);
+          }}
+        />
         <div>
-          <Button onClick={onClickPredict} variant="contained" color="primary">
+          <Button
+            onClick={() => setShowResult(true)}
+            variant="contained"
+            color="primary"
+          >
             Predict
           </Button>
         </div>
