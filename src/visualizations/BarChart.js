@@ -13,6 +13,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+/* transform data to the form that is easy to display in graph */
 const foo = (data) => {
   const mapping = {
     "very high": 5,

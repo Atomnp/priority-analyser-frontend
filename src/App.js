@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PredictionPage from "./prediction";
+import AnalysisPage from "./analysis";
 import Layout from "./components/Layout";
 import { useState } from "react";
 import BarChart from "./visualizations/BarChart";
@@ -64,7 +65,7 @@ function App() {
               />
             </Route>
             <Route path="/analyse" exact>
-              <h1>I am analysis page</h1>
+              <AnalysisPage filterData={getSelected(filters)} />
             </Route>
             <Route path="/result" exact>
               <BarChart filterData={getSelected(filters)} rank={rank} />

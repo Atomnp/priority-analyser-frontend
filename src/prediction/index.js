@@ -12,13 +12,7 @@ const useStyles = createUseStyles({
     // marginLeft: "auto",
     // marginRight: "auto",
     // textAlign: "center",
-  },
-  chart: {
-    width: "400px",
-    height: "400px",
-    marginLeft: "auto",
-    marginRight: "auto",
-  },
+  }
 });
 
 const PredictionPage = ({ filterData, rank, setRank }) => {
