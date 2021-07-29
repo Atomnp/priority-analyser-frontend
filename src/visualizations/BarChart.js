@@ -41,11 +41,8 @@ const foo = (data) => {
   });
 };
 
-const CustomizedLabel = (props) => {
-  return <text>{"AAAAAAA"}</text>;
-};
-
 const Example = ({ filterData, rank }) => {
+  const noOfDataPerFrame = 8;
   const [data, setData] = useState([]);
   /* data is shown 10 at a time so this variable helps to determine which frame is that, 
   for example initionally it is zero and if i press next then data that needs to be 
@@ -63,7 +60,10 @@ const Example = ({ filterData, rank }) => {
       setData(foo(res.data));
 
       setCurrentFrame(
-        foo(res.data).slice(0, 10 > data.length ? data.length : 10)
+        foo(res.data).slice(
+          0,
+          noOfDataPerFrame > data.length ? data.length : noOfDataPerFrame
+        )
       );
       setDataFrameNo(0);
     });
@@ -106,12 +106,7 @@ const Example = ({ filterData, rank }) => {
           />
           <Tooltip />
           <Legend />
-          <Bar
-            label={<CustomizedLabel />}
-            name="Score"
-            background
-            dataKey="probVal"
-          >
+          <Bar name="Score" background dataKey="probVal">
             {currentFrame.map((entry, index) => (
               <React.Fragment key={entry["label"]}>
                 <Cell key={entry["label"]} fill={entry.color} />
@@ -141,9 +136,12 @@ const Example = ({ filterData, rank }) => {
           onClick={() => {
             if (dataFrameNo > 0) {
               let a = dataFrameNo - 1;
-              let b = a * 10 + 10;
+              let b = a * noOfDataPerFrame + noOfDataPerFrame;
               setCurrentFrame(
-                data.slice(a * 10, b > data.length ? data.length : b)
+                data.slice(
+                  a * noOfDataPerFrame,
+                  b > data.length ? data.length : b
+                )
               );
               setDataFrameNo(a);
             }
@@ -152,18 +150,21 @@ const Example = ({ filterData, rank }) => {
           Previous
         </Button>
         <Button
-          disabled={(dataFrameNo + 1) * 10 > data.length}
+          disabled={(dataFrameNo + 1) * noOfDataPerFrame >= data.length}
           variant="contained"
           color="primary"
           onClick={() => {
-            if ((dataFrameNo + 1) * 10 <= data.length) {
+            if ((dataFrameNo + 1) * noOfDataPerFrame <= data.length) {
               let a = dataFrameNo + 1;
-              let b = a * 10 + 10;
+              let b = a * noOfDataPerFrame + noOfDataPerFrame;
               console.log(a);
               console.log();
 
               setCurrentFrame(
-                data.slice(a * 10, b > data.length ? data.length : b)
+                data.slice(
+                  a * noOfDataPerFrame,
+                  b > data.length ? data.length : b
+                )
               );
               setDataFrameNo(a);
               console.log(currentFrame);
