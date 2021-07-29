@@ -41,7 +41,6 @@ https://github.com/recharts/recharts/blob/master/src/component/DefaultTooltipCon
 
 const CustomizedTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
-    console.log(payload);
     return (
       <div
         style={{

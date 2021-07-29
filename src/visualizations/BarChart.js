@@ -41,10 +41,10 @@ const foo = (data) => {
   });
 };
 
-const Example = ({ filterData, rank }) => {
+const MyBarChart = ({ filterData, rank }) => {
   const noOfDataPerFrame = 8;
   const [data, setData] = useState([]);
-  /* data is shown 10 at a time so this variable helps to determine which frame is that, 
+  /* data is shown "noOfDataFrame"(eg.10) at a time so this variable helps to determine which frame is that, 
   for example initionally it is zero and if i press next then data that needs to be 
   displayed are data no 10 to data no 20 */
   const [dataFrameNo, setDataFrameNo] = useState(0);
@@ -58,6 +58,7 @@ const Example = ({ filterData, rank }) => {
 
     api.post("/prediction", data).then((res) => {
       setData(foo(res.data));
+      console.log("red color high debug", foo(res.data));
 
       setCurrentFrame(
         foo(res.data).slice(
@@ -102,7 +103,7 @@ const Example = ({ filterData, rank }) => {
             axisLine={false}
             type="number"
             dataKey="probVal"
-            // ticks={[0, 1, 2, 3, 4, 5]}
+            ticks={[0, 1, 2, 3, 4, 5]}
           />
           <Tooltip />
           <Legend />
@@ -178,4 +179,4 @@ const Example = ({ filterData, rank }) => {
   );
 };
 
-export default Example;
+export default MyBarChart;
