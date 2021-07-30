@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { useState } from "react";
 import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
 
 const data = [
@@ -36,7 +36,7 @@ const renderActiveShape = (props) => {
   return (
     <g>
       <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-        {payload.name}
+        {payload.faculty}
       </text>
       <Sector
         cx={cx}
@@ -67,8 +67,8 @@ const renderActiveShape = (props) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`PV ${value}`}</text>
-      <text
+      >{`Seats ${value}`}</text>
+      {/* <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         dy={18}
@@ -76,43 +76,37 @@ const renderActiveShape = (props) => {
         fill="#999"
       >
         {`(Rate ${(percent * 100).toFixed(2)}%)`}
-      </text>
+      </text> */}
     </g>
   );
 };
 
-export default class Example extends PureComponent {
-  static demoUrl =
-    "https://codesandbox.io/s/pie-chart-with-customized-active-shape-y93si";
+const SeatPieChart = ({ currentFrame }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  state = {
-    activeIndex: 0,
+  const onPieEnter = (_, index) => {
+    setActiveIndex(index);
   };
 
-  onPieEnter = (_, index) => {
-    this.setState({
-      activeIndex: index,
-    });
-  };
+  return (
+    //   <ResponsiveContainer width="100%" height="80%">
+    <PieChart width={500} height={500}>
+      {console.log("current frame in seat pie chart", currentFrame)}
+      <Pie
+        activeIndex={activeIndex}
+        activeShape={renderActiveShape}
+        data={currentFrame}
+        cx="50%"
+        cy="50%"
+        innerRadius={40}
+        outerRadius={120}
+        fill="#8884d8"
+        dataKey="seats"
+        onMouseEnter={onPieEnter}
+      />
+    </PieChart>
+    //   </ResponsiveContainer>
+  );
+};
 
-  render() {
-    return (
-      <ResponsiveContainer width="50%" height="80%">
-        <PieChart width={400} height={400}>
-          <Pie
-            activeIndex={this.state.activeIndex}
-            activeShape={renderActiveShape}
-            data={data}
-            cx="50%"
-            cy="50%"
-            innerRadius={60}
-            outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
-            onMouseEnter={this.onPieEnter}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  }
-}
+export default SeatPieChart;

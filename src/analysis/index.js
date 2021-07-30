@@ -11,15 +11,26 @@ import api from "../lib/api";
 import MyChart from "../visualizations/RangeChart";
 import SeatPieChart from "../visualizations/PieChart";
 import { Typography, Button } from "@material-ui/core";
+import { ResponsiveContainer } from "recharts";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 // const useStyles = createUseStyles({
-//   App: {
-//     padding: "1rem 0",
-//     // marginLeft: "auto",
-//     // marginRight: "auto",
-//     // textAlign: "center",
+//   charts: {
+//     display: "flex",
 //   },
 // });
+const useStyles = makeStyles((theme) => {
+  /* we can do some javascript with theme object here */
+
+  return {
+    charts: {
+      [theme.breakpoints.up("sm")]: {
+        display: "flex",
+      },
+    },
+  };
+});
+
 /* transform data to the form that is easy to display in graph */
 const transform = (data) => {
   const color = {
@@ -36,11 +47,14 @@ const transform = (data) => {
       lower: data["lowerLimit"],
       /* to stack data as per required by graph */
       upper_minus_lower: data["upperLimit"] - data["lowerLimit"],
-      seats: data["seats"],
+      seats: Number(data["seats"]),
+      college: `${data["college"]} ${data["type"]}`,
     };
   });
 };
 const AnalysisPage = ({ filterData }) => {
+  let classes = useStyles();
+
   const noOfDataPerFrame = 8;
   const [data, setData] = useState([]);
   const [dataFrameNo, setDataFrameNo] = useState(0);
@@ -67,7 +81,17 @@ const AnalysisPage = ({ filterData }) => {
   return (
     <>
       <Typography variant="h4">Range Chart For Each Faculty</Typography>
-      <MyChart currentFrame={currentFrame} />
+      <div className={classes.charts}>
+        <ResponsiveContainer width="100%" height={500}>
+          {/* y axis maa k rakhne vanera pani pathaune, faculty garda one college all faculty aauxa ani college garda all college one faculty dekhauxa aile lai(filter  aafaile manually choose garnu parxa)  */}
+          <MyChart yaxis_data={"faculty"} currentFrame={currentFrame} />
+        </ResponsiveContainer>
+        <ResponsiveContainer width="100%" height={500}>
+          {/* <MyChart currentFrame={currentFrame} /> */}
+          <SeatPieChart currentFrame={currentFrame} />
+        </ResponsiveContainer>
+      </div>
+
       <div
         style={{
           padding: "0 2rem",
