@@ -65,7 +65,7 @@ const MyBarChart = ({ filterData, rank }) => {
     data.set("faculty", filterData[2]["selected"]);
     data.set("rank", rank);
 
-    api.post("/prediction", data).then((res) => {
+    api.post("/prediction/", data).then((res) => {
       setData(foo(res.data));
       setCurrentFrame(
         foo(res.data).slice(

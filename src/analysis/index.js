@@ -71,7 +71,7 @@ const AnalysisPage = ({ filterData }) => {
     data.set("faculty", filterData[2]["selected"]);
     data.set("rank", 200);
 
-    api.post("/analysis", data).then((res) => {
+    api.post("/analysis/", data).then((res) => {
       /* sanitize data in required form */
       setData(transform(res.data));
       setCurrentFrame(
