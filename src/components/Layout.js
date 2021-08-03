@@ -135,7 +135,7 @@ function ResponsiveDrawer(props) {
               </svg>
             </Hidden>
 
-            <Typography variant="h6" className={classes.title}>
+            <Typography onClick={()=>{props.setShowResult(false)}} style={{cursor:"pointer"}}variant="h6" className={classes.title}>
               R a n k a n a l y s e r
             </Typography>
             <Hidden xsDown implementation="css">

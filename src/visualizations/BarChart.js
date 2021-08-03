@@ -102,7 +102,7 @@ const MyBarChart = ({ filterData, rank }) => {
             tickLine={false}
             domain={[0, 5]}
             height={5}
-            tickCount={5}
+            tickCount={0}
             type="number"
           />
           <YAxis

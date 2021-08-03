@@ -15,8 +15,8 @@ const useStyles = createUseStyles({
   },
 });
 
-const PredictionPage = ({ filterData, rank, setRank }) => {
-  const [showResult, setShowResult] = useState(false);
+const PredictionPage = ({ filterData, rank, setRank, setShowResult, showResult }) => {
+  // const [showResult, setShowResult] = useState(false);
   const styles = useStyles();
   return showResult ? (
     <div>

@@ -19,6 +19,7 @@ function App() {
   };
 
   const [rank, setRank] = useState("");
+  const [showresult, setShowresult] = useState(false);
   const [currentPage, setCurrentPage] = useState("predict");
   const [filters, setFilters] = useState({
     college: {
@@ -54,13 +55,15 @@ function App() {
   return (
     <Router>
       <div>
-        <Layout currentPage={currentPage} filters={filters}>
+        <Layout currentPage={currentPage} filters={filters} setShowResult={setShowresult} showResult={showresult}>
           <Switch>
             <Route path="/" exact>
               <PredictionPage
                 filterData={getSelected(filters)}
                 rank={rank}
                 setRank={setRank}
+                setShowResult={setShowresult}
+                showResult={showresult}
               />
             </Route>
             <Route path="/predict" exact>
@@ -68,6 +71,9 @@ function App() {
                 filterData={getSelected(filters)}
                 rank={rank}
                 setRank={setRank}
+                setShowResult={setShowresult}
+                showResult={showresult}
+
               />
             </Route>
             <Route path="/analyse" exact>
