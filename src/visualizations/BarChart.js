@@ -6,13 +6,16 @@ import {
   Bar,
   XAxis,
   YAxis,
-  LabelList,
-  Cell,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
-
+const colorsMapping = {
+  "very high": "#69B34C",
+  high: "#ACB334",
+  critical: "#FAB733",
+  low: "#FF8E15",
+  "very low": "#FF4E11",
+};
 /* transform data to the form that is easy to display in graph */
 const foo = (data) => {
   const mapping = {
@@ -23,22 +26,28 @@ const foo = (data) => {
     "very low": 1,
   };
 
-  const color = {
-    "very high": "#69B34C",
-    high: "#ACB334",
-    critical: "#FAB733",
-    low: "#FF8E15",
-    "very low": "#FF4E11",
-  };
-
   return data.map((data) => {
     return {
       probVal: mapping[data["probablity"]],
       label: `${data["college"]} ${data["program"]} ${data["type"]}`,
-      color: color[data["probablity"]],
+      fill: colorsMapping[data["probablity"]],
       probString: data["probablity"] + " chance",
     };
   });
+};
+
+const CustomLabel = ({ x, y, fill, value }) => {
+  return (
+    <text
+      dy={-4}
+      fontSize="16"
+      fontFamily="sans-serif"
+      fill={"fill"}
+      textAnchor="middle"
+    >
+      {value}%
+    </text>
+  );
 };
 
 const MyBarChart = ({ filterData, rank }) => {
@@ -58,8 +67,6 @@ const MyBarChart = ({ filterData, rank }) => {
 
     api.post("/prediction", data).then((res) => {
       setData(foo(res.data));
-      console.log("red color high debug", foo(res.data));
-
       setCurrentFrame(
         foo(res.data).slice(
           0,
@@ -76,7 +83,7 @@ const MyBarChart = ({ filterData, rank }) => {
 
   return (
     <div>
-      <ResponsiveContainer width="100%" height={500}>
+      <ResponsiveContainer width="100%" height={400}>
         {/* <h1>for rank =123</h1> */}
         <BarChart
           layout="vertical"
@@ -89,25 +96,26 @@ const MyBarChart = ({ filterData, rank }) => {
           }}
         >
           {/* <CartesianGrid strokeDasharray="3 3" /> */}
+          {/* <CartesianGrid strokeDasharray="3 3" /> */}
+          <XAxis
+            axisLine={false}
+            tickLine={false}
+            domain={[0, 5]}
+            height={5}
+            tickCount={5}
+            type="number"
+          />
           <YAxis
             type="category"
-            dataKey="label"
-            width={200}
+            dataKey={"label"}
             axisLine={false}
-            orientation="right"
-            tick={5}
-          />
-          <XAxis
-            orientation="top"
-            tick={false}
-            axisLine={false}
-            type="number"
-            dataKey="probVal"
-            ticks={[0, 1, 2, 3, 4, 5]}
+            padding={{ right: 10 }}
           />
           <Tooltip />
-          <Legend />
-          <Bar name="Score" background dataKey="probVal">
+
+          {/* <Legend /> */}
+
+          {/* <Bar name="Score" background dataKey="probVal">
             {currentFrame.map((entry, index) => (
               <React.Fragment key={entry["label"]}>
                 <Cell key={entry["label"]} fill={entry.color} />
@@ -119,18 +127,49 @@ const MyBarChart = ({ filterData, rank }) => {
                 />
               </React.Fragment>
             ))}
-          </Bar>
-          {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
+          </Bar> */}
+          <Bar
+            // label={true}
+            // name="probString"
+            label={CustomLabel}
+            // stroke="#FF0000"
+
+            dataKey="probVal"
+          />
         </BarChart>
       </ResponsiveContainer>
       <div
         style={{
-          padding: "0 2rem",
           display: "flex",
-          justifyContent: "space-between",
+          padding: "1rem",
+          justifyContent: "space-around",
+        }}
+      >
+        {/* color haina colors hunu parne variab */}
+        {Object.keys(colorsMapping).map((prob) => (
+          <div style={{ display: "flex" }}>
+            <div
+              style={{
+                height: "1rem",
+                width: "1rem",
+                backgroundColor: colorsMapping[prob],
+                marginRight: "0.5rem",
+              }}
+            ></div>
+            <p>{prob}</p>
+          </div>
+        ))}
+      </div>
+      <div
+        style={{
+          padding: "0 3rem",
+          marginBottom: "2rem",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <Button
+          style={{ marginRight: "2rem" }}
           disabled={dataFrameNo <= 0}
           variant="contained"
           color="primary"
@@ -158,9 +197,6 @@ const MyBarChart = ({ filterData, rank }) => {
             if ((dataFrameNo + 1) * noOfDataPerFrame <= data.length) {
               let a = dataFrameNo + 1;
               let b = a * noOfDataPerFrame + noOfDataPerFrame;
-              console.log(a);
-              console.log();
-
               setCurrentFrame(
                 data.slice(
                   a * noOfDataPerFrame,
@@ -168,7 +204,6 @@ const MyBarChart = ({ filterData, rank }) => {
                 )
               );
               setDataFrameNo(a);
-              console.log(currentFrame);
             }
           }}
         >

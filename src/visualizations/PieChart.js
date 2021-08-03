@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
 
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-];
-
-const renderActiveShape = (props) => {
+const renderActiveShape = (props, yaxis_data) => {
   const RADIAN = Math.PI / 180;
   const {
     cx,
@@ -36,7 +29,7 @@ const renderActiveShape = (props) => {
   return (
     <g>
       <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-        {payload.faculty}
+        {yaxis_data === "faculty" ? payload.faculty : payload.college}
       </text>
       <Sector
         cx={cx}
@@ -81,7 +74,7 @@ const renderActiveShape = (props) => {
   );
 };
 
-const SeatPieChart = ({ currentFrame }) => {
+const SeatPieChart = ({ yaxis_data, currentFrame }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const onPieEnter = (_, index) => {
@@ -89,23 +82,22 @@ const SeatPieChart = ({ currentFrame }) => {
   };
 
   return (
-    //   <ResponsiveContainer width="100%" height="80%">
-    <PieChart width={500} height={500}>
-      {console.log("current frame in seat pie chart", currentFrame)}
-      <Pie
-        activeIndex={activeIndex}
-        activeShape={renderActiveShape}
-        data={currentFrame}
-        cx="50%"
-        cy="50%"
-        innerRadius={40}
-        outerRadius={120}
-        fill="#8884d8"
-        dataKey="seats"
-        onMouseEnter={onPieEnter}
-      />
-    </PieChart>
-    //   </ResponsiveContainer>
+    <ResponsiveContainer width="100%" height="80%">
+      <PieChart>
+        <Pie
+          activeIndex={activeIndex}
+          activeShape={(props) => renderActiveShape(props, yaxis_data)}
+          data={currentFrame}
+          cx="50%"
+          cy="50%"
+          innerRadius={40}
+          outerRadius={100}
+          fill="#8884d8"
+          dataKey="seats"
+          onMouseEnter={onPieEnter}
+        />
+      </PieChart>
+    </ResponsiveContainer>
   );
 };
 

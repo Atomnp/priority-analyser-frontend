@@ -42,36 +42,36 @@ const CustomizedTooltip = ({ active, payload, label }) => {
 };
 const RangeChart = ({ yaxis_data, currentFrame }) => {
   return (
-    <BarChart
-      layout="vertical"
-      width={700}
-      height={500}
-      data={currentFrame}
-      margin={{
-        top: 20,
-        right: 30,
-        left: 20,
-        bottom: 5,
-      }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis tickCount={5} type="number" />
-      <YAxis
-        type="category"
-        dataKey={yaxis_data}
-        axisLine={false}
-        padding={{ right: 10 }}
-      />
+    <ResponsiveContainer width="100%" height={400}>
+      <BarChart
+        layout="vertical"
+        data={currentFrame}
+        margin={{
+          top: 20,
+          right: 30,
+          left: 20,
+          bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis tickCount={5} type="number" />
+        <YAxis
+          type="category"
+          dataKey={yaxis_data}
+          axisLine={false}
+          padding={{ right: 10 }}
+        />
 
-      <Tooltip
-        // cursor={{ stroke: "#A0A0A0", strokeWidth: 1, fill: "#eeeeee" }}
-        content={<CustomizedTooltip />}
-      />
-
-      <Legend />
-      <Bar opacity={0} dataKey="lower" stackId="a" fill="#fafafa" />
-      <Bar dataKey="upper_minus_lower" stackId="a" fill="#8884d8" />
-    </BarChart>
+        <Tooltip
+          // cursor={{ stroke: "#A0A0A0", strokeWidth: 1, fill: "#eeeeee" }}
+          content={<CustomizedTooltip />}
+        />
+        {/* 
+        <Legend /> */}
+        <Bar opacity={0} dataKey="lower" stackId="a" fill="#fafafa" />
+        <Bar dataKey="upper_minus_lower" stackId="a" fill="#8884d8" />
+      </BarChart>
+    </ResponsiveContainer>
   );
 };
 export default RangeChart;

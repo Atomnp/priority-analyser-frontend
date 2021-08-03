@@ -84,13 +84,16 @@ function ResponsiveDrawer(props) {
       </Typography>
       <div className={classes.toolbar} /> <Divider />
       {Object.entries(props.filters).map(([key, val]) => {
+        /* since we have no college data currently just don't display year dropdown */
         return (
-          <Dropdown
-            type={key}
-            options={val["list"]}
-            selected={val["selected"]}
-            handleSelect={val["handleSelect"]}
-          />
+          key !== "year" && (
+            <Dropdown
+              type={key}
+              options={val["list"]}
+              selected={val["selected"]}
+              handleSelect={val["handleSelect"]}
+            />
+          )
         );
       })}
       <Divider />
@@ -133,7 +136,7 @@ function ResponsiveDrawer(props) {
             </Hidden>
 
             <Typography variant="h6" className={classes.title}>
-              Rank Analyser
+              R a n k a n a l y s e r
             </Typography>
             <Hidden xsDown implementation="css">
               <Link

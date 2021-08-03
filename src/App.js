@@ -1,4 +1,8 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 import PredictionPage from "./prediction";
 import AnalysisPage from "./analysis";
 import Layout from "./components/Layout";
@@ -15,6 +19,7 @@ function App() {
   };
 
   const [rank, setRank] = useState("");
+  const [currentPage, setCurrentPage] = useState("predict");
   const [filters, setFilters] = useState({
     college: {
       list: ["All", "PUL", "PUR"],
@@ -44,11 +49,12 @@ function App() {
       },
     },
   });
-
+  // const path = useRouteMatch();
+  // console.log("path = ", path);
   return (
     <Router>
       <div>
-        <Layout filters={filters}>
+        <Layout currentPage={currentPage} filters={filters}>
           <Switch>
             <Route path="/" exact>
               <PredictionPage

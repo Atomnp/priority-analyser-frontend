@@ -12,6 +12,7 @@ import FormControl from "@material-ui/core/FormControl";
 
 const useStyles = makeStyles((theme) => ({
   margin: {
+    width: "90%",
     [theme.breakpoints.up("md")]: {
       width: "70%",
     },
@@ -35,6 +36,7 @@ export default function InputAdornments({ rank, onRankChange }) {
           startAdornment={
             <InputAdornment position="start">Rank</InputAdornment>
           }
+          type="Number"
           // labelWidth={60}
         />
       </FormControl>
