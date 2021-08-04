@@ -2,21 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
-const myTheme = createMuiTheme({
-  // mixins: {
-  //   toolbar: {
-  //     // minHeight: 36,
-  //   },
-  // },
-});
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={myTheme}>
       <App />
-    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
