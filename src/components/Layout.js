@@ -20,8 +20,8 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import {
   lightBlue,
   blueGrey,
-  grey,
-  blue
+  deepOrange,
+  yellow
 } from "@material-ui/core/colors"
 
 import Dropdown from "./Dropdown";
@@ -82,7 +82,7 @@ function ResponsiveDrawer(props) {
   const [darkState, setDarkState] = useState(false);
   const palletType = darkState ? "dark" : "light";
   const mainPrimaryColor = darkState ? blueGrey[800] : lightBlue[800];
-  const mainSecondaryColor = darkState ? grey[800] : blue[800];
+  const mainSecondaryColor = darkState ? deepOrange[500] : yellow[800];
   const darkTheme = createMuiTheme({
     palette: {
       type: palletType,
