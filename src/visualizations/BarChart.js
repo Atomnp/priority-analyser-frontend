@@ -50,7 +50,7 @@ const CustomLabel = ({ x, y, fill, value }) => {
   );
 };
 
-const MyBarChart = ({ filterData, rank }) => {
+const MyBarChart = ({ selectedCollege, selectedFaculty, rank }) => {
   const noOfDataPerFrame = 8;
   const [data, setData] = useState([]);
   /* data is shown "noOfDataFrame"(eg.10) at a time so this variable helps to determine which frame is that, 
@@ -61,8 +61,8 @@ const MyBarChart = ({ filterData, rank }) => {
 
   useEffect(() => {
     const data = new FormData();
-    data.set("college", filterData[0]["selected"]);
-    data.set("faculty", filterData[2]["selected"]);
+    data.set("college", selectedCollege);
+    data.set("faculty", selectedFaculty);
     data.set("rank", rank);
 
     api.post("/prediction/", data).then((res) => {
@@ -75,7 +75,7 @@ const MyBarChart = ({ filterData, rank }) => {
       );
       setDataFrameNo(0);
     });
-  }, [filterData, rank]);
+  }, [selectedCollege, selectedFaculty, rank]);
 
   // data1 = foo(data);
   // data1 = data1.slice(0, 10);

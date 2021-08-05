@@ -3,24 +3,18 @@ import OneCollegeOneFac from "./OneCollegeOneFac";
 import AllCollegeOneFac from "./AllCollegeOneFac";
 import OneCollegeAllFac from "./OneCollegeAllFac";
 
-const AnalysisPage = ({ filterData }) => {
+const AnalysisPage = ({ selectedCollege, selectedFaculty }) => {
   return (
     <div>
-      {/* filterData is a array in the form
-        0: {name: "college", selected: "PUL"}
-        1: {name: "year", selected: "All"}
-        2: {name: "faculty", selected: "All"}
-      */}
-      {filterData[0]["selected"] === "All" &&
-        filterData[2]["selected"] !== "All" && (
-          <AllCollegeOneFac facultyName={filterData[2]["selected"]} />
-        )}
-      {filterData[0]["selected"] !== "All" &&
-        filterData[2]["selected"] === "All" && (
-          <OneCollegeAllFac collegeName={filterData[0]["selected"]} />
-        )}
-      {filterData[0]["selected"] !== "All" &&
-        filterData[2]["selected"] !== "All" && <OneCollegeOneFac />}
+      {selectedCollege === "All" && selectedFaculty !== "All" && (
+        <AllCollegeOneFac facultyName={selectedFaculty} />
+      )}
+      {selectedCollege !== "All" && selectedFaculty === "All" && (
+        <OneCollegeAllFac collegeName={selectedCollege} />
+      )}
+      {selectedCollege !== "All" && selectedFaculty !== "All" && (
+        <OneCollegeOneFac />
+      )}
     </div>
   );
 };

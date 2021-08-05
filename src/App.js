@@ -7,24 +7,16 @@ import BarChart from "./visualizations/BarChart";
 import api from "./lib/api";
 
 function App() {
-  const getSelected = (filters) => {
-    let selected = [];
-    Object.entries(filters).forEach(([key, value]) => {
-      selected.push({ name: key, selected: value["selected"] });
-    });
-    return selected;
-  };
-
   const [rank, setRank] = useState("");
   const [showresult, setShowresult] = useState(false);
   const [currentPage, setCurrentPage] = useState("predict");
 
   const [collegeList, setCollegeList] = useState([]);
-  const [yearList, setYearList] = useState([]);
+  // const [yearList, setYearList] = useState([]);
   const [facultyList, setFacultyList] = useState([]);
 
   const [selectedCollege, setSelectedCollege] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
+  // const [selectedYear, setSelectedYear] = useState("");
   const [selectedFaculty, setSelectedFaculty] = useState("");
 
   useEffect(() => {
@@ -70,35 +62,6 @@ function App() {
     setSelectedFaculty("All");
   }, [selectedCollege]);
 
-  const [filters, setFilters] = useState({
-    college: {
-      list: ["All", "PUL", "PUR"],
-      selected: "All",
-      handleSelect: (college) => {
-        let filtersnew = { ...filters };
-        filtersnew["college"]["selected"] = college;
-        setFilters(filtersnew);
-      },
-    },
-    year: {
-      list: ["All", "2077", "2076"],
-      selected: "All",
-      handleSelect: (year) => {
-        let filtersnew = { ...filters };
-        filtersnew["year"]["selected"] = year;
-        setFilters(filtersnew);
-      },
-    },
-    faculty: {
-      list: ["All", "BCT", "BCE", "BEX", "BEL"],
-      selected: "All",
-      handleSelect: (faculty) => {
-        let filtersnew = { ...filters };
-        filtersnew["faculty"]["selected"] = faculty;
-        setFilters(filtersnew);
-      },
-    },
-  });
   return (
     <Router>
       <div>
@@ -116,7 +79,8 @@ function App() {
           <Switch>
             <Route path="/" exact>
               <PredictionPage
-                filterData={getSelected(filters)}
+                selectedCollege={selectedCollege}
+                selectedFaculty={selectedFaculty}
                 rank={rank}
                 setRank={setRank}
                 setShowResult={setShowresult}
@@ -125,7 +89,8 @@ function App() {
             </Route>
             <Route path="/predict" exact>
               <PredictionPage
-                filterData={getSelected(filters)}
+                selectedCollege={selectedCollege}
+                selectedFaculty={selectedFaculty}
                 rank={rank}
                 setRank={setRank}
                 setShowResult={setShowresult}
@@ -133,7 +98,10 @@ function App() {
               />
             </Route>
             <Route path="/analyse" exact>
-              <AnalysisPage filterData={getSelected(filters)} />
+              <AnalysisPage
+                selectedCollege={selectedCollege}
+                selectedFaculty={selectedFaculty}
+              />
             </Route>
             <Route>
               <h1>404</h1>

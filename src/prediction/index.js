@@ -15,7 +15,14 @@ const useStyles = createUseStyles({
   },
 });
 
-const PredictionPage = ({ filterData, rank, setRank, setShowResult, showResult }) => {
+const PredictionPage = ({
+  selectedCollege,
+  selectedFaculty,
+  rank,
+  setRank,
+  setShowResult,
+  showResult,
+}) => {
   // const [showResult, setShowResult] = useState(false);
   const styles = useStyles();
   return showResult ? (
@@ -29,14 +36,22 @@ const PredictionPage = ({ filterData, rank, setRank, setShowResult, showResult }
             }}
           />
           <div>
-            <MyChart filterData={filterData} rank={rank} />
+            <MyChart
+              selectedCollege={selectedCollege}
+              selectedFaculty={selectedFaculty}
+              rank={rank}
+            />
           </div>
         </div>
       </Hidden>
       <Hidden xsDown implementation="css">
         <div style={{ display: "flex" }}>
           <div style={{ width: "70%" }}>
-            <MyChart filterData={filterData} rank={rank} />
+            <MyChart
+              selectedCollege={selectedCollege}
+              selectedFaculty={selectedFaculty}
+              rank={rank}
+            />
           </div>
           <div style={{}}>
             <Search
