@@ -1,6 +1,6 @@
 // import React from "react";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
@@ -74,6 +74,19 @@ const useStyles = makeStyles((theme) => {
     },
     navItems: {
       textDecoration: "none",
+    },
+    navLink: {
+      textDecoration: "none",
+      color: "black",
+      "&:hover": {
+        color: "white",
+        textDecoration: "none",
+      },
+    },
+
+    activeLink: {
+      textDecoration: "none",
+      color: "white",
     },
   };
 });
@@ -178,18 +191,20 @@ function ResponsiveDrawer(props) {
               </Typography>
               <Switch checked={darkState} onChange={handleThemeChange} />
               <Hidden xsDown implementation="css">
-                <Link
-                  style={{ textDecoration: "none", color: "white" }}
+                <NavLink
+                  className={classes.navLink}
+                  activeClassName={classes.activeLink}
                   to="/predict"
                 >
                   <Button color="inherit">Predict</Button>
-                </Link>
-                <Link
-                  style={{ textDecoration: "none", color: "white" }}
+                </NavLink>
+                <NavLink
+                  className={classes.navLink}
+                  activeClassName={classes.activeLink}
                   to="/analyse"
                 >
                   <Button color="inherit">Analyse</Button>
-                </Link>
+                </NavLink>
               </Hidden>
             </Toolbar>
           </AppBar>
