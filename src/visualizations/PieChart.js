@@ -29,7 +29,7 @@ const renderActiveShape = (props, yaxis_data) => {
   return (
     <g>
       <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-        {yaxis_data === "faculty" ? payload.faculty : payload.college}
+        {payload[yaxis_data]}
       </text>
       <Sector
         cx={cx}
@@ -82,7 +82,7 @@ const SeatPieChart = ({ yaxis_data, currentFrame }) => {
   };
 
   return (
-    <ResponsiveContainer width="100%" height="80%">
+    <ResponsiveContainer width="100%">
       <PieChart>
         <Pie
           activeIndex={activeIndex}

@@ -13,7 +13,10 @@ const AnalysisPage = ({ selectedCollege, selectedFaculty }) => {
         <OneCollegeAllFac collegeName={selectedCollege} />
       )}
       {selectedCollege !== "All" && selectedFaculty !== "All" && (
-        <OneCollegeOneFac />
+        <OneCollegeOneFac
+          selectedFaculty={selectedFaculty}
+          selectedCollege={selectedCollege}
+        />
       )}
     </div>
   );
