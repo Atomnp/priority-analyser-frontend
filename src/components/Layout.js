@@ -21,8 +21,8 @@ import {
   lightBlue,
   blueGrey,
   deepOrange,
-  yellow
-} from "@material-ui/core/colors"
+  yellow,
+} from "@material-ui/core/colors";
 
 import Dropdown from "./Dropdown";
 import BottomNav from "./BottomNav";
@@ -87,12 +87,12 @@ function ResponsiveDrawer(props) {
     palette: {
       type: palletType,
       primary: {
-        main: mainPrimaryColor
+        main: mainPrimaryColor,
       },
       secondary: {
-        main: mainSecondaryColor
-      }
-    }
+        main: mainSecondaryColor,
+      },
+    },
   });
   const handleThemeChange = () => {
     setDarkState(!darkState);
@@ -113,19 +113,22 @@ function ResponsiveDrawer(props) {
         Filters
       </Typography>
       <div className={classes.toolbar} /> <Divider />
-      {Object.entries(props.filters).map(([key, val]) => {
-        /* since we have no college data currently just don't display year dropdown */
-        return (
-          key !== "year" && (
-            <Dropdown
-              type={key}
-              options={val["list"]}
-              selected={val["selected"]}
-              handleSelect={val["handleSelect"]}
-            />
-          )
-        );
-      })}
+      {props.collegeList && (
+        <Dropdown
+          type={"College"}
+          options={props.collegeList.map((item) => item.code)}
+          selected={props.selectedCollege}
+          handleSelect={props.setSelectedCollege}
+        />
+      )}
+      {props.facultyList && (
+        <Dropdown
+          type={"Faculty"}
+          options={props.facultyList.map((item) => item.code)}
+          selected={props.selectedFaculty}
+          handleSelect={props.setSelectedFaculty}
+        />
+      )}
       <Divider />
     </div>
   );
@@ -157,6 +160,10 @@ function ResponsiveDrawer(props) {
                   viewBox="0 0 79 52"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  onClick={() => {
+                    props.setShowResult(false);
+                  }}
+                  style={{ cursor: "pointer" }}
                 >
                   <path
                     d="M40.2841 45C28.3659 35.1558 11.7955 36.5634 5 40.6652V10.741C19.8977 5.00787 30.4394 9.90204 40.2841 14.6563M40.2841 45C46.0341 40.6186 64.8 31.3523 74 36.61V5.00787C64.4167 4.82143 40.2841 7.94439 40.2841 14.6563M40.2841 45V14.6563"
@@ -166,7 +173,7 @@ function ResponsiveDrawer(props) {
                 </svg>
               </Hidden>
 
-              <Typography onClick={() => { props.setShowResult(false) }} style={{ cursor: "pointer" }} variant="h6" className={classes.title}>
+              <Typography variant="h6" className={classes.title}>
                 R a n k a n a l y s e r
               </Typography>
               <Switch checked={darkState} onChange={handleThemeChange} />
