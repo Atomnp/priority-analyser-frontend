@@ -59,7 +59,6 @@ function App() {
           setFacultyList(formated);
         });
     }
-    setSelectedFaculty("All");
   }, [selectedCollege]);
 
   return (

@@ -25,11 +25,19 @@ const PredictionPage = ({
 }) => {
   // const [showResult, setShowResult] = useState(false);
   const styles = useStyles();
+
+  const onClickPredict = () => {
+    if (rank > 0) {
+      setShowResult(true);
+    }
+  };
+
   return showResult ? (
     <div>
       <Hidden smUp implementation="css">
         <div style={{ textAlign: "center" }}>
           <Search
+            onPressEnter={onClickPredict}
             rank={rank}
             onRankChange={(data) => {
               setRank(data);
@@ -55,6 +63,7 @@ const PredictionPage = ({
           </div>
           <div style={{}}>
             <Search
+              onPressEnter={onClickPredict}
               rank={rank}
               onRankChange={(data) => {
                 setRank(data);
@@ -70,6 +79,7 @@ const PredictionPage = ({
       <Typography align="center" variant="h4">
         Decide fast, Decide smart
         <Search
+          onPressEnter={onClickPredict}
           rank={rank}
           onRankChange={(data) => {
             setRank(data);
@@ -77,9 +87,10 @@ const PredictionPage = ({
         />
         <div>
           <Button
-            onClick={() => (rank ? setShowResult(true) : "")}
+            onClick={onClickPredict}
             variant="contained"
             color="primary"
+            disabled={rank <= 0}
           >
             Predict
           </Button>

@@ -22,8 +22,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function InputAdornments({ rank, onRankChange }) {
+export default function InputAdornments({ rank, onRankChange, onPressEnter }) {
   const classes = useStyles();
+  console.log(onPressEnter);
+  console.log(onRankChange);
 
   return (
     <div>
@@ -32,11 +34,19 @@ export default function InputAdornments({ rank, onRankChange }) {
         <OutlinedInput
           id="outlined-adornment-amount"
           value={rank}
-          onChange={(event) => onRankChange(event.target.value)}
           startAdornment={
             <InputAdornment position="start">Rank</InputAdornment>
           }
           type="Number"
+          onChange={(event) => {
+            onRankChange(event.target.value);
+          }}
+          onKeyPress={(keyData) => {
+            console.log("key", keyData);
+            if (keyData.key === "Enter") {
+              onPressEnter();
+            }
+          }}
           // labelWidth={60}
         />
       </FormControl>
