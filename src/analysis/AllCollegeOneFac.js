@@ -23,14 +23,14 @@ const useStyles = makeStyles((theme) => {
 /* transform data to the form that is easy to display in graph */
 const transform = (data) => {
   const colors = [
-    "#a4752b",
-    "#fdd0a6",
-    "#0f27fd",
-    "#e0064d",
-    "#a5051a",
-    "#1e8231",
-    "#4f6ebf",
-    "#ad24d0",
+    "#0d47a1",
+    "#1565c0",
+    "#1976d2",
+    "#1e88e5",
+    "#2196f3",
+    "#42a5f5",
+    "#64b5f6",
+    "#90caf9",
   ];
 
   return data.map((data, i) => {

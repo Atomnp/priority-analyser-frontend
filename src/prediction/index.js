@@ -1,7 +1,9 @@
 import "@blueprintjs/core/lib/css/blueprint.css";
 import React from "react";
 import { Typography, Button, Hidden } from "@material-ui/core";
+
 import { createUseStyles } from "react-jss";
+import Barsvg from "../static/barchart.svg";
 
 import Search from "../components/search";
 import MyChart from "../visualizations/BarChart";
@@ -76,7 +78,15 @@ const PredictionPage = ({
     </div>
   ) : (
     <div className={styles.App}>
-      <Typography align="center" variant="h4">
+      <div style={{ textAlign: "center" }}>
+        <img
+          style={{ margin: "0 auto" }}
+          width="10%"
+          src={Barsvg}
+          alt="bar chart svg"
+        ></img>
+      </div>
+      <Typography fontFamily align="center" variant="h4">
         Decide fast, Decide smart
         <Search
           onPressEnter={onClickPredict}

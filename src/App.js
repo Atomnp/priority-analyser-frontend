@@ -34,7 +34,7 @@ function App() {
   useEffect(() => {
     if (selectedCollege === "All") {
       // if (true) {
-      api.get("/programs").then(({ data }) => {
+      api.get("/programs/").then(({ data }) => {
         data.unshift({ code: "All", name: "All" });
         setFacultyList(data);
       });
