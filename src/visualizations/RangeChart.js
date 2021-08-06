@@ -26,13 +26,17 @@ const CustomizedTooltip = ({ active, payload, label }) => {
           whiteSpace: "nowrap",
         }}
       >
-        <p className="label">{`${label} : lower= ${
+        <p className="desc">
+          {payload[0].payload["program_name"]}{" "}
+          {" " + payload[0].payload["type"] === "R" ? "Regular" : "Full Fee"}
+        </p>
+        <p className="desc">{payload[0].payload["college_name"]}</p>
+        <p className="label">{`lower= ${
           payload[0].payload["lower"]
         } , upper =  ${
           payload[0].payload["upper_minus_lower"] + payload[0].payload["lower"]
         }`}</p>
         {/* <p className="intro">{getIntroOfPage(label)}</p> */}
-        <p className="desc">Anything you want can be displayed here.</p>
       </div>
     );
   }
@@ -67,8 +71,21 @@ const RangeChart = ({ yaxis_data, currentFrame }) => {
         />
         {/* 
         <Legend /> */}
-        <Bar opacity={0} dataKey="lower" stackId="a" fill="#fafafa" />
-        <Bar dataKey="upper_minus_lower" stackId="a" fill="#8884d8" />
+        <Bar
+          // radius={[10, 0, 0, 10]}
+          barSize={15}
+          opacity={0}
+          dataKey="lower"
+          stackId="a"
+          fill="#fafafa"
+        />
+        <Bar
+          radius={[10, 10, 10, 10]}
+          barSize={15}
+          dataKey="upper_minus_lower"
+          stackId="a"
+          fill="#8884d8"
+        />
       </BarChart>
     </ResponsiveContainer>
   );

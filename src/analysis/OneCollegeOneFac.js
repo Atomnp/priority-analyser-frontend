@@ -69,7 +69,7 @@ export default function CustomizedTables({ selectedCollege, selectedFaculty }) {
 
   return (
     <Grid spacing={5} justify="center" container>
-      <Grid style={{ margin: "0 auto" }} item xs={8} md={6}>
+      <Grid style={{ margin: "0 auto" }} item xs={10} md={4}>
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
@@ -98,7 +98,7 @@ export default function CustomizedTables({ selectedCollege, selectedFaculty }) {
           </Table>
         </TableContainer>
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={10} md={7}>
         {hasRegular && (
           <SeatPieChart currentFrame={pieChartData} yaxis_data="type" />
         )}

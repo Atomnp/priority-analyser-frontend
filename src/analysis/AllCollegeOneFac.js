@@ -4,7 +4,7 @@ import api from "../lib/api";
 
 import MyChart from "../visualizations/RangeChart";
 import SeatPieChart from "../visualizations/PieChart";
-import { Typography, Button } from "@material-ui/core";
+import { Typography, Button, Grid } from "@material-ui/core";
 import { ResponsiveContainer } from "recharts";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -42,6 +42,8 @@ const transform = (data) => {
       seats: Number(data["seats"]),
       college: `${data["college"]} ${data["type"]}`,
       fill: colors[i % 8],
+      college_name: data["college_name"],
+      program_name: data["program_name"],
     };
   });
 };
@@ -73,16 +75,23 @@ const OneCollegeOneFac = ({ facultyName }) => {
   }, [facultyName]);
   return (
     <>
-      <Typography variant="h4">Range Chart For Each Faculty</Typography>
-      <div className={classes.charts}>
-        {/* y axis maa k rakhne vanera pani pathaune, faculty garda one college all faculty aauxa ani college garda all college one faculty dekhauxa aile lai(filter  aafaile manually choose garnu parxa)  */}
-        <MyChart yaxis_data={"college"} currentFrame={currentFrame} />
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="h4">Range Chart For Each Faculty</Typography>
+        </Grid>
 
-        <ResponsiveContainer width="100%" height={400}>
-          {/* <MyChart currentFrame={currentFrame} /> */}
-          <SeatPieChart yaxis_data={"college"} currentFrame={currentFrame} />
-        </ResponsiveContainer>
-      </div>
+        <Grid item xs={12} sm={6}>
+          <MyChart yaxis_data={"college"} currentFrame={currentFrame} />
+        </Grid>
+        {/* y axis maa k rakhne vanera pani pathaune, faculty garda one college all faculty aauxa ani college garda all college one faculty dekhauxa aile lai(filter  aafaile manually choose garnu parxa)  */}
+
+        <Grid item xs={12} sm={6}>
+          <ResponsiveContainer width="100%" height={400}>
+            {/* <MyChart currentFrame={currentFrame} /> */}
+            <SeatPieChart yaxis_data={"college"} currentFrame={currentFrame} />
+          </ResponsiveContainer>
+        </Grid>
+      </Grid>
 
       <div
         style={{

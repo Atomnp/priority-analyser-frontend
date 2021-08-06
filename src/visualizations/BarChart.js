@@ -30,26 +30,57 @@ const foo = (data) => {
     return {
       probVal: mapping[data["probablity"]],
       label: `${data["college"]} ${data["program"]} ${data["type"]}`,
+      college_name: data["college_name"],
+      program_name: data["program_name"],
       fill: colorsMapping[data["probablity"]],
       probString: data["probablity"] + " chance",
     };
   });
 };
 
-const CustomLabel = ({ x, y, fill, value }) => {
-  return (
-    <text
-      dy={-4}
-      fontSize="16"
-      fontFamily="sans-serif"
-      fill={"fill"}
-      textAnchor="middle"
-    >
-      {value}%
-    </text>
-  );
+const CustomLabel = (a) => {
+  return <p>a</p>;
+  // return (
+  //   <text
+  //     dy={-4}
+  //     fontSize="16"
+  //     fontFamily="sans-serif"
+  //     fill={"fill"}
+  //     textAnchor="middle"
+  //   >
+  //     {value}%
+  //   </text>
+  // );
 };
+const CustomizedTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div
+        style={{
+          margin: 0,
+          padding: 10,
+          backgroundColor: "#fff",
+          border: "1px solid #ccc",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {/* <p className="label">{`${label} : lower= ${
+          payload[0].payload["college_name"]
+        } , upper =  ${
+          payload[0].payload["upper_minus_lower"] + payload[0].payload["lower"]
+        }`}</p> */}
+        {/* <p className="intro">{getIntroOfPage(label)}</p> */}
+        <p className="desc">{payload[0].payload["college_name"]}</p>
+        <p className="desc">
+          {payload[0].payload["program_name"]}{" "}
+          {" " + payload[0].payload["type"] === "R" ? "Regular" : "Full Fee"}
+        </p>
+      </div>
+    );
+  }
 
+  return null;
+};
 const MyBarChart = ({ selectedCollege, selectedFaculty, rank }) => {
   const noOfDataPerFrame = 8;
   const [data, setData] = useState([]);
@@ -109,9 +140,15 @@ const MyBarChart = ({ selectedCollege, selectedFaculty, rank }) => {
             type="category"
             dataKey={"label"}
             axisLine={false}
+            tickLine={false}
             padding={{ right: 10 }}
+            width={100}
+            // orientation="right"
           />
-          <Tooltip />
+          <Tooltip
+            // cursor={{ stroke: "#A0A0A0", strokeWidth: 1, fill: "#eeeeee" }}
+            content={<CustomizedTooltip />}
+          />
 
           {/* <Legend /> */}
 
@@ -129,6 +166,8 @@ const MyBarChart = ({ selectedCollege, selectedFaculty, rank }) => {
             ))}
           </Bar> */}
           <Bar
+            radius={[10, 10, 10, 10]}
+            barSize={15}
             // label={true}
             // name="probString"
             label={CustomLabel}

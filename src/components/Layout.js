@@ -177,6 +177,7 @@ function ResponsiveDrawer(props) {
               <Hidden xsDown>
                 <Link to="/">
                   <img
+                    onClick={() => props.setShowResult(false)}
                     style={{ margin: "0 auto" }}
                     width="150"
                     height="50"
