@@ -24,9 +24,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function InputAdornments({ rank, onRankChange, onPressEnter }) {
   const classes = useStyles();
-  console.log(onPressEnter);
-  console.log(onRankChange);
-
   return (
     <div>
       <FormControl fullWidth className={classes.margin} variant="outlined">
@@ -42,7 +39,6 @@ export default function InputAdornments({ rank, onRankChange, onPressEnter }) {
             onRankChange(event.target.value);
           }}
           onKeyPress={(keyData) => {
-            console.log("key", keyData);
             if (keyData.key === "Enter") {
               onPressEnter();
             }

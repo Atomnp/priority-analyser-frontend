@@ -67,7 +67,6 @@ const OneCollegeAllFac = ({ collegeName }) => {
         )
       );
       setDataFrameNo(0);
-      console.log("One college All Fac", collegeName);
     });
   }, [collegeName]);
   return (
@@ -120,8 +119,6 @@ const OneCollegeAllFac = ({ collegeName }) => {
             if ((dataFrameNo + 1) * noOfDataPerFrame <= data.length) {
               let a = dataFrameNo + 1;
               let b = a * noOfDataPerFrame + noOfDataPerFrame;
-              console.log(a);
-              console.log();
 
               setCurrentFrame(
                 data.slice(
@@ -130,7 +127,6 @@ const OneCollegeAllFac = ({ collegeName }) => {
                 )
               );
               setDataFrameNo(a);
-              console.log(currentFrame);
             }
           }}
         >

@@ -6,7 +6,7 @@ import MyChart from "../visualizations/RangeChart";
 import SeatPieChart from "../visualizations/PieChart";
 import { Typography, Button } from "@material-ui/core";
 import { ResponsiveContainer } from "recharts";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => {
   /* we can do some javascript with theme object here */
@@ -121,9 +121,6 @@ const OneCollegeOneFac = ({ facultyName }) => {
             if ((dataFrameNo + 1) * noOfDataPerFrame <= data.length) {
               let a = dataFrameNo + 1;
               let b = a * noOfDataPerFrame + noOfDataPerFrame;
-              console.log(a);
-              console.log();
-
               setCurrentFrame(
                 data.slice(
                   a * noOfDataPerFrame,
@@ -131,7 +128,6 @@ const OneCollegeOneFac = ({ facultyName }) => {
                 )
               );
               setDataFrameNo(a);
-              console.log(currentFrame);
             }
           }}
         >

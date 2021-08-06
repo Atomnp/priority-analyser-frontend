@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 const transform = (data) => {
   let result = [];
   result.push({ type: "Regular", seats: data[1]["seats"], fill: "#441DCE" });
-  if (data.length == 2) {
+  if (data.length === 2) {
     result.push({ type: "Full Fee", seats: data[0]["seats"], fill: "#7859E7" });
   }
   return result;
@@ -54,10 +54,9 @@ export default function CustomizedTables({ selectedCollege, selectedFaculty }) {
         `/collegeprograms/?college=${selectedCollege}&program=${selectedFaculty}`
       )
       .then(({ data }) => {
-        console.log(data);
         setPayingData(data[0]);
 
-        if (data.length == 2) {
+        if (data.length === 2) {
           setRegularData(data[1]);
           setPieChartData(transform(data));
           setHasRegular(true);
@@ -70,7 +69,7 @@ export default function CustomizedTables({ selectedCollege, selectedFaculty }) {
 
   return (
     <Grid spacing={5} justify="center" container>
-      <Grid style={{ margin: "0 auto" }} item xs="8" md="6">
+      <Grid style={{ margin: "0 auto" }} item xs={8} md={6}>
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
@@ -84,9 +83,6 @@ export default function CustomizedTables({ selectedCollege, selectedFaculty }) {
               <TableBody>
                 {/* we always have paying data but regular data chai gov college ko lagi matra hunxa so mapping through payingData */}
                 {Object.keys(payingData).map((key) => {
-                  console.log(key);
-                  console.log(payingData[key]);
-
                   return (
                     <StyledTableRow key={key}>
                       <TableCell component="th" scope="row">
@@ -102,7 +98,7 @@ export default function CustomizedTables({ selectedCollege, selectedFaculty }) {
           </Table>
         </TableContainer>
       </Grid>
-      <Grid item xs="12" md="6">
+      <Grid item xs={12} md={6}>
         {hasRegular && (
           <SeatPieChart currentFrame={pieChartData} yaxis_data="type" />
         )}

@@ -20,19 +20,19 @@ export default function SimpleBottomNavigation() {
       value={value}
       onChange={(event, newValue) => {
         setValue(newValue);
-        const path = newValue == 0 ? "/predict" : "/analyse";
+        const path = newValue === 0 ? "/predict" : "/analyse";
         history.push(path);
       }}
       showLabels
       className={classes.root}
     >
       <BottomNavigationAction
-        showLabel="true"
+        showLabel={true}
         label="Predict"
         icon={<EmojiObjectsIcon />}
       />
       <BottomNavigationAction
-        showLabel="true"
+        showLabel={true}
         label="Analyse"
         icon={<InsertChartIcon />}
       />

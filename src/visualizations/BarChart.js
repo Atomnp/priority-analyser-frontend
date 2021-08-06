@@ -145,9 +145,8 @@ const MyBarChart = ({ selectedCollege, selectedFaculty, rank }) => {
           justifyContent: "space-around",
         }}
       >
-        {/* color haina colors hunu parne variab */}
         {Object.keys(colorsMapping).map((prob) => (
-          <div style={{ display: "flex" }}>
+          <div key={prob} style={{ display: "flex" }}>
             <div
               style={{
                 height: "1rem",

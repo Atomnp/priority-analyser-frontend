@@ -13,7 +13,6 @@ const renderActiveShape = (props, yaxis_data) => {
     endAngle,
     fill,
     payload,
-    percent,
     value,
   } = props;
   const sin = Math.sin(-RADIAN * midAngle);

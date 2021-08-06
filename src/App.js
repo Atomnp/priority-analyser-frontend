@@ -3,14 +3,11 @@ import PredictionPage from "./prediction";
 import AnalysisPage from "./analysis";
 import Layout from "./components/Layout";
 import { useEffect, useState } from "react";
-import BarChart from "./visualizations/BarChart";
 import api from "./lib/api";
 
 function App() {
   const [rank, setRank] = useState("");
   const [showresult, setShowresult] = useState(false);
-  const [currentPage, setCurrentPage] = useState("predict");
-
   const [collegeList, setCollegeList] = useState([]);
   // const [yearList, setYearList] = useState([]);
   const [facultyList, setFacultyList] = useState([]);
@@ -35,7 +32,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (selectedCollege == "All") {
+    if (selectedCollege === "All") {
       // if (true) {
       api.get("/programs").then(({ data }) => {
         data.unshift({ code: "All", name: "All" });
@@ -62,7 +59,6 @@ function App() {
     <Router>
       <div>
         <Layout
-          currentPage={currentPage}
           collegeList={collegeList}
           facultyList={facultyList}
           selectedCollege={selectedCollege}
