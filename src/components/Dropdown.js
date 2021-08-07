@@ -18,7 +18,7 @@ const BootstrapInput = withStyles((theme) => ({
     border: "1px solid #ced4da",
     fontSize: 16,
     padding: "10px 26px 10px 12px",
-    transition: theme.transitions.create(["border-color", "box-shadow"]),
+    // transition: theme.transitions.create(["border-color", "box-shadow"]),
     // Use the system font instead of the default Roboto font.
     fontFamily: [
       "-apple-system",
@@ -42,7 +42,7 @@ const BootstrapInput = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
   margin: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(2,4),
   },
 }));
 
@@ -57,14 +57,12 @@ export default function CustomizedSelects({
     handleSelect(event.target.value);
   };
   return (
-    <div style={{ width: "90%" }}>
+    <div style={{ width: "70%" }}>
       <FormControl
         fullWidth={true}
-        style={{ paddingRight: "3rem" }}
-        // size="medium"
         className={classes.margin}
       >
-        <InputLabel style={{ fontSize: "1.3rem" }}>
+        <InputLabel color="secondary" disableAnimation style={{ fontSize: "1.3rem" }}>
           {type.toUpperCase()}
         </InputLabel>
         <NativeSelect

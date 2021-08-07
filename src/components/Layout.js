@@ -13,12 +13,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Switch from "@material-ui/core/Switch";
+import Box from '@material-ui/core/Box';
 
-import LogoSvg from "../static/ali_thulo_gap_vako.svg";
-import MobileSvg from "../static//IOE_Rankmobile.svg";
-
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { createTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import {
   lightBlue,
   blueGrey,
@@ -26,85 +23,87 @@ import {
   yellow,
 } from "@material-ui/core/colors";
 
+import MobileSvg from "../static//IOE_Rankmobile.svg";
+import LogoSvg from "../static/ali_thulo_gap_vako.svg";
+
 import Dropdown from "./Dropdown";
 import BottomNav from "./BottomNav";
-// import { height, minHeight } from "@material-ui/system";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => {
-  /* we can do some javascript with theme object here */
-  return {
-    root: {
-      display: "flex",
-    },
-    drawer: {
-      [theme.breakpoints.up("sm")]: {
-        width: drawerWidth,
-        flexShrink: 0,
-      },
-    },
-    mobAppBar: {
-      backgroundColor: lightBlue[800],
-      textAlign: "center",
-      minHeight: 30,
-    },
-    appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-      [theme.breakpoints.up("sm")]: {
-        // width: `calc(100% - ${drawerWidth}px)`,
-        // marginLeft: drawerWidth,
-      },
-      // height: "5rem",
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-      [theme.breakpoints.up("sm")]: {
-        display: "none",
-      },
-    },
-    // necessary for content to be below app bar
-    toolbar: {
-      minHeight: 30,
-    },
-
-    drawerPaper: {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+  },
+  drawer: {
+    [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
+      flexShrink: 0,
     },
-    content: {
-      flexGrow: 1,
-      // padding: theme.spacing(3),
-      padding: "3rem 0",
+  },
+  mobAppBar: {
+    backgroundColor: lightBlue[800],
+    textAlign: "center",
+    minHeight: 30,
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+    [theme.breakpoints.up("sm")]: {
+      // width: `calc(100% - ${drawerWidth}px)`,
+      // marginLeft: drawerWidth,
     },
-    title: {
-      flexGrow: 1,
-      marginLeft: "1rem",
+    // height: "5rem",
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
     },
-    navItems: {
-      textDecoration: "none",
-    },
-    navLink: {
-      textDecoration: "none",
-      color: "black",
-      "&:hover": {
-        color: "white",
-        textDecoration: "none",
-      },
-    },
+  },
+  // necessary for content to be below app bar
+  toolbar: {
+    minHeight: 30,
+  },
 
-    activeLink: {
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  content: {
+    flexGrow: 1,
+    // padding: theme.spacing(3),
+    padding: "3rem 0",
+  },
+  title: {
+    flexGrow: 1,
+    margin: "0.2rem 0.5rem",
+    // marginLeft: "1rem",
+  },
+  subtitle: {
+    margin:"0rem 2rem 0.5rem", 
+    borderBottom:"2px solid grey",
+    fontSize: "1.1rem", 
+  },
+  navLink: {
+    textDecoration: "none",
+    color: "#eeeeee",
+    "&:hover": {
+      color: "#ffab91",
       textDecoration: "none",
-      color: "white",
     },
-  };
-});
+  },
+  activeLink: {
+    textDecoration: "none",
+    color: "#ff7043",
+  },
+}));
+
 
 function ResponsiveDrawer(props) {
   const [darkState, setDarkState] = useState(false);
   const palletType = darkState ? "dark" : "light";
   const mainPrimaryColor = darkState ? blueGrey[800] : lightBlue[800];
-  const mainSecondaryColor = darkState ? deepOrange[500] : yellow[800];
-  const darkTheme = createMuiTheme({
+  const mainSecondaryColor = darkState ? deepOrange[400] : yellow[800];
+  const theme = createTheme({
     palette: {
       type: palletType,
       primary: {
@@ -113,15 +112,17 @@ function ResponsiveDrawer(props) {
       secondary: {
         main: mainSecondaryColor,
       },
+      contrastThreshold: 3,
+      tonalOffset: 0.2,
     },
   });
+
   const handleThemeChange = () => {
     setDarkState(!darkState);
   };
 
   const { window } = props;
   const classes = useStyles();
-  const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -130,10 +131,11 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <div className={classes.mobAppBar}>
+      <Box component="div" className={classes.mobAppBar}>
         <img width="150" height="50" src={LogoSvg} alt="logo"></img>
-      </div>
+      </Box>
       <div className={classes.toolbar} />
+      <Typography variant="button" className={classes.subtitle}>Filters</Typography>
       {props.collegeList && (
         <Dropdown
           type={"College"}
@@ -158,7 +160,7 @@ function ResponsiveDrawer(props) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <div>
         <div className={classes.root}>
           <CssBaseline />
@@ -175,7 +177,7 @@ function ResponsiveDrawer(props) {
                 <MenuIcon />
               </IconButton>
               <Hidden xsDown>
-                <Link to="/">
+                <Link to="/" className={classes.title}>
                   <img
                     onClick={() => props.setShowResult(false)}
                     style={{ margin: "0 auto" }}
@@ -186,7 +188,7 @@ function ResponsiveDrawer(props) {
                   ></img>
                 </Link>
               </Hidden>
-              <Hidden smUp implementation="css">
+              <Hidden smUp implementation="css" className={classes.title}>
                 <img
                   style={{ margin: "0 auto" }}
                   width="100"
@@ -196,7 +198,6 @@ function ResponsiveDrawer(props) {
                 ></img>
               </Hidden>
 
-              <Typography variant="h6" className={classes.title}></Typography>
               <Switch checked={darkState} onChange={handleThemeChange} />
               <Hidden xsDown implementation="css">
                 <NavLink
@@ -213,16 +214,18 @@ function ResponsiveDrawer(props) {
                 >
                   <Button color="inherit">Analyse</Button>
                 </NavLink>
+
               </Hidden>
             </Toolbar>
           </AppBar>
-          <nav className={classes.drawer} aria-label="mailbox folders">
+          <nav className={classes.drawer}>
             {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
             <Hidden smUp implementation="css">
               <Drawer
                 container={container}
                 variant="temporary"
-                anchor={theme.direction === "rtl" ? "right" : "left"}
+                // anchor={theme.direction === "rtl" ? "right" : "left"}
+                anchor="left"
                 open={mobileOpen}
                 onClose={handleDrawerToggle}
                 classes={{
