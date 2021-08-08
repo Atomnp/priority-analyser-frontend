@@ -13,7 +13,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Switch from "@material-ui/core/Switch";
-import Box from '@material-ui/core/Box';
 
 import { createTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import {
@@ -42,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   mobAppBar: {
-    backgroundColor: lightBlue[800],
     textAlign: "center",
     minHeight: 30,
   },
@@ -67,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
 
   drawerPaper: {
     width: drawerWidth,
+    flexShrink: 0,
   },
   content: {
     flexGrow: 1,
@@ -79,9 +78,9 @@ const useStyles = makeStyles((theme) => ({
     // marginLeft: "1rem",
   },
   subtitle: {
-    margin:"0rem 2rem 0.5rem", 
-    borderBottom:"2px solid grey",
-    fontSize: "1.1rem", 
+    margin: "0rem 2rem 0.5rem",
+    borderBottom: "2px solid grey",
+    fontSize: "1.1rem",
   },
   navLink: {
     textDecoration: "none",
@@ -131,9 +130,12 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <Box component="div" className={classes.mobAppBar}>
+      <div
+        className={classes.mobAppBar}
+        style={{ backgroundColor: mainPrimaryColor }}
+      >
         <img width="150" height="50" src={LogoSvg} alt="logo"></img>
-      </Box>
+      </div>
       <div className={classes.toolbar} />
       <Typography variant="button" className={classes.subtitle}>Filters</Typography>
       {props.collegeList && (
