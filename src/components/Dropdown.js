@@ -6,8 +6,15 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
-  margin: {
+  form: {
     margin: theme.spacing(2, 4),
+  },
+  title:{
+    fontSize: "1.1rem",
+  },
+  fields:{
+    fontSize: "1.2rem",
+    paddingTop:"0.5rem",
   },
 }));
 
@@ -25,12 +32,12 @@ export default function CustomizedSelects({
     <div style={{ width: "70%" }}>
       <FormControl
         fullWidth={true}
-        className={classes.margin}
+        className={classes.form}
       >
-        <InputLabel color="secondary" disableAnimation style={{ fontSize: "1.3rem" }}>
+        <InputLabel color="secondary" disableAnimation className={classes.title}>
           {type.toUpperCase()}
         </InputLabel>
-        <Select
+        <Select className={classes.fields}
           id="demo-customized-select-native"
           value={selected}
           onChange={handleChange}
