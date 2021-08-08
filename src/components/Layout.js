@@ -28,6 +28,7 @@ import {
 
 import Dropdown from "./Dropdown";
 import BottomNav from "./BottomNav";
+import shadows from "@material-ui/core/styles/shadows";
 // import { height, minHeight } from "@material-ui/system";
 
 const drawerWidth = 240;
@@ -45,7 +46,6 @@ const useStyles = makeStyles((theme) => {
       },
     },
     mobAppBar: {
-      backgroundColor: lightBlue[800],
       textAlign: "center",
       minHeight: 30,
     },
@@ -130,7 +130,10 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <div className={classes.mobAppBar}>
+      <div
+        className={classes.mobAppBar}
+        style={{ backgroundColor: mainPrimaryColor }}
+      >
         <img width="150" height="50" src={LogoSvg} alt="logo"></img>
       </div>
       <div className={classes.toolbar} />
