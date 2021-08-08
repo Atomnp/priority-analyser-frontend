@@ -7,9 +7,14 @@ import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects";
 
 import { useHistory } from "react-router-dom";
 
-const useStyles = makeStyles({
-  root: {},
-});
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '&$selected': {
+      color: theme.palette.secondary.main,
+    },
+  },
+  selected: {}, // do not remove this, otherwise will not work
+}));
 
 export default function SimpleBottomNavigation() {
   const classes = useStyles();
@@ -17,21 +22,28 @@ export default function SimpleBottomNavigation() {
   const history = useHistory();
   return (
     <BottomNavigation
-      value={value}
-      onChange={(event, newValue) => {
+    value={value}
+    onChange={(event, newValue) => {
         setValue(newValue);
         const path = newValue === 0 ? "/predict" : "/analyse";
         history.push(path);
       }}
       showLabels
-      className={classes.root}
-    >
+      >
       <BottomNavigationAction
+        classes={{
+          root: classes.root,
+          selected: classes.selected
+        }}
         showLabel={true}
         label="Predict"
         icon={<EmojiObjectsIcon />}
       />
       <BottomNavigationAction
+        classes={{
+          root: classes.root,
+          selected: classes.selected
+        }}
         showLabel={true}
         label="Analyse"
         icon={<InsertChartIcon />}

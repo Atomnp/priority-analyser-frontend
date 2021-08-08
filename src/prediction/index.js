@@ -1,21 +1,24 @@
-import "@blueprintjs/core/lib/css/blueprint.css";
 import React from "react";
 import { Typography, Button, Hidden } from "@material-ui/core";
-
-import { createUseStyles } from "react-jss";
-import Barsvg from "../static/barchart.svg";
+import { makeStyles } from '@material-ui/core/styles';
+import Barsvg from "../static/1final.svg";
+import Grid from '@material-ui/core/Grid';
 
 import Search from "../components/search";
 import MyChart from "../visualizations/BarChart";
 
-const useStyles = createUseStyles({
-  App: {
-    padding: "1rem 0",
-    // marginLeft: "auto",
-    // marginRight: "auto",
-    // textAlign: "center",
+const useStyles = makeStyles((theme) => ({
+  button: {
+    margin: "0.8rem 0"
   },
-});
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(1, 0, 0, 0),
+    textAlign: 'center',
+  },
+}));
 
 const PredictionPage = ({
   selectedCollege,
@@ -26,7 +29,7 @@ const PredictionPage = ({
   showResult,
 }) => {
   // const [showResult, setShowResult] = useState(false);
-  const styles = useStyles();
+  const classes = useStyles();
 
   const onClickPredict = () => {
     if (rank > 0) {
@@ -77,36 +80,46 @@ const PredictionPage = ({
       </Hidden>
     </div>
   ) : (
-    <div className={styles.App}>
-      <div style={{ textAlign: "center" }}>
-        <img
-          style={{ margin: "0 auto" }}
-          width="10%"
-          src={Barsvg}
-          alt="bar chart svg"
-        ></img>
-      </div>
-      <Typography fontFamily align="center" variant="h4">
-        Decide fast, Decide smart
-        <Search
-          onPressEnter={onClickPredict}
-          rank={rank}
-          onRankChange={(data) => {
-            setRank(data);
-          }}
-        />
-        <div>
-          <Button
-            onClick={onClickPredict}
-            variant="contained"
-            color="primary"
-            disabled={rank <= 0}
-          >
-            Predict
-          </Button>
-        </div>
-      </Typography>
+    <div className={classes.root}>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <div className={classes.paper}>
+            <img
+              width="20%"
+              src={Barsvg}
+              alt="bar chart svg"
+            ></img>
+          </div>
+          <div className={classes.paper}>
+            <Typography variant="h4">
+              Prediction
+            </Typography>
+            <Typography variant="body1">
+              BE Rank and Priority Analyser
+            </Typography>
+            <Typography variant="subtitle2">
+              Year - 2077
+            </Typography>
+            <Search
+              onPressEnter={onClickPredict}
+              rank={rank}
+              onRankChange={(data) => {
+                setRank(data);
+              }}
+            />
+            <Button className={classes.button}
+              onClick={onClickPredict}
+              variant="contained"
+              color="primary"
+              disabled={rank <= 0}
+            >
+              Predict
+            </Button>
+          </div>
+        </Grid>
+      </Grid>
     </div>
+
   );
 };
 export default PredictionPage;

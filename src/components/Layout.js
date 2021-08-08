@@ -8,7 +8,6 @@ import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Switch from "@material-ui/core/Switch";
 import { makeStyles } from '@material-ui/core/styles';
@@ -51,9 +50,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   // necessary for content to be below app bar
-  toolbar: {
-    minHeight: 30,
-  },
+  toolbar: theme.mixins.toolbar,
 
   drawerPaper: {
     width: drawerWidth,
@@ -61,18 +58,16 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    // padding: theme.spacing(3),
-    padding: "3rem 0",
+    margin: theme.spacing(3),
   },
   title: {
     flexGrow: 1,
     margin: "0.2rem 0.5rem",
-    // marginLeft: "1rem",
   },
   subtitle: {
-    margin: "0rem 2rem 0.5rem",
-    borderBottom: "2px solid",
-    borderBottomColor: theme.palette.text.secondary,
+    margin: "2rem 2rem 0.5rem",
+    borderBottom: "1px solid",
+    borderBottomColor: theme.palette.grey[500],
     fontSize: "1.1rem",
   },
   navLink: {
@@ -109,13 +104,12 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <div
-        className={classes.mobAppBar}
-      >
+      <div className={classes.mobAppBar}>
         <img width="150" height="50" src={LogoSvg} alt="logo"></img>
       </div>
-      <div className={classes.toolbar} />
-      <Typography variant="button" className={classes.subtitle}>Filters</Typography>
+
+      <Typography variant="button" component="h3" className={classes.subtitle}>Filters</Typography>
+      
       {props.collegeList && (
         <Dropdown
           type={"College"}
@@ -132,16 +126,16 @@ function ResponsiveDrawer(props) {
           handleSelect={props.setSelectedFaculty}
         />
       )}
-      {/* <Divider /> */}
     </div>
   );
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
+  const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <div>
       <div className={classes.root}>
+
+        {/* appbar starts here */}
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
             <IconButton
@@ -195,8 +189,10 @@ function ResponsiveDrawer(props) {
             </Hidden>
           </Toolbar>
         </AppBar>
+        {/* appbar ends here */}
+
+        {/* drawer starts here */}
         <nav className={classes.drawer}>
-          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
           <Hidden smUp implementation="css">
             <Drawer
               container={container}
@@ -226,16 +222,25 @@ function ResponsiveDrawer(props) {
             </Drawer>
           </Hidden>
         </nav>
-        <div className={classes.content}>
+        {/* drawer ends here  */}
+
+        {/* main body starts here */}
+        <main className={classes.content}>
           <div className={classes.toolbar}></div>
           {props.children}
-        </div>
+        </main>
+        {/* main body ends here */}
+      
       </div>
+
+      {/* bottom navigation for mobile starts here */}
       <Hidden smUp implementation="css">
         <div style={{ position: "fixed", bottom: "0", width: "100%" }}>
           <BottomNav />
         </div>
       </Hidden>
+      {/* bottom navigation for mobile ends here */}
+
     </div>
   );
 }
