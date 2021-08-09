@@ -1,38 +1,32 @@
 import React from "react";
 import { Typography, Button, Hidden } from "@material-ui/core";
-// import Barsvg from "../static";
-// import Barsvg from "../static/3dchart.png";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
+import Barsvg from "../static/1final.svg";
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
 
 import Search from "../components/search";
 import MyChart from "../visualizations/BarChart";
 
-// const useStyles = createUseStyles({
-//   App: {
-//     padding: "1rem 0",
-//     // marginLeft: "auto",
-//     // marginRight: "auto",
-//     // textAlign: "center",
-//   },
-// });
-const useStyles = makeStyles((theme) => {
-  return {
-    App: {
-      padding: "1rem 0",
-      // marginLeft: "auto",
-      // marginRight: "auto",
-      // textAlign: "center",
+const useStyles = makeStyles((theme) => ({
+  button: {
+    margin: "0.8rem 0"
+  },
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(1, 0, 0, 0),
+    textAlign: 'center',
+  },
+  image: {
+    padding: theme.spacing(1, 0, 0, 0),
+    textAlign: 'center',
+    [theme.breakpoints.down('md')]: {
+      width:"60%",
     },
-    primaryColor: {
-      color: theme.palette.primary.main,
-    },
-  };
-});
-// const theme = createTheme({
-//   typography: {
-//     fontFamily: ['"Segoe UI Symbol"'].join(","),
-//   },
-// });
+  }
+}));
 
 const PredictionPage = ({
   selectedCollege,
@@ -95,44 +89,46 @@ const PredictionPage = ({
       </Hidden>
     </div>
   ) : (
-    <div className={classes.App}>
-      <div style={{ textAlign: "center" }}>
-        {/* <img
-          style={{ margin: "0 auto" }}
-          width="40%"
-          src={Barsvg}
-          alt="bar chart svg"
-        ></img> */}
-      </div>
-      {/* <ThemeProvider theme={theme}> */}
-      <Typography
-        style={{ paddingTop: "4rem" }}
-        className={classes.primaryColor}
-        align="center"
-        variant="h5"
-      >
-        Decide fast, Decide smart
-        <Search
-          onPressEnter={onClickPredict}
-          rank={rank}
-          onRankChange={(data) => {
-            setRank(data);
-          }}
-        />
-        <div>
-          <Button
-            onClick={onClickPredict}
-            variant="contained"
-            color="primary"
-            disabled={rank <= 0}
-            style={{ marginTop: "2rem" }}
-          >
-            Predict
-          </Button>
-        </div>
-      </Typography>
-      {/* </ThemeProvider> */}
+    <div className={classes.root}>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <div className={classes.paper}>
+            <img
+              className={classes.image}
+              width="20%"
+              src={Barsvg}
+              alt="bar chart svg"
+            ></img>
+          </div>
+          <div className={classes.paper}>
+            <Typography variant="h4">
+              Prediction
+            </Typography>
+            <Container maxWidth="sm">
+            <Typography variant="caption">
+              BE Aspirants are required to enter their obtained/expected rank below. The prediction is based on the cutoff rank of IOE admission list of year 2077.
+            </Typography>
+            </Container>
+            <Search
+              onPressEnter={onClickPredict}
+              rank={rank}
+              onRankChange={(data) => {
+                setRank(data);
+              }}
+            />
+            <Button className={classes.button}
+              onClick={onClickPredict}
+              variant="contained"
+              color="primary"
+              disabled={rank <= 0}
+            >
+              Predict
+            </Button>
+          </div>
+        </Grid>
+      </Grid>
     </div>
+
   );
 };
 export default PredictionPage;
