@@ -3,6 +3,7 @@ import { Typography, Button, Hidden } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import Barsvg from "../static/1final.svg";
 import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
 
 import Search from "../components/search";
 import MyChart from "../visualizations/BarChart";
@@ -18,6 +19,13 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1, 0, 0, 0),
     textAlign: 'center',
   },
+  image: {
+    padding: theme.spacing(1, 0, 0, 0),
+    textAlign: 'center',
+    [theme.breakpoints.down('md')]: {
+      width:"60%",
+    },
+  }
 }));
 
 const PredictionPage = ({
@@ -85,6 +93,7 @@ const PredictionPage = ({
         <Grid item xs={12}>
           <div className={classes.paper}>
             <img
+              className={classes.image}
               width="20%"
               src={Barsvg}
               alt="bar chart svg"
@@ -94,12 +103,11 @@ const PredictionPage = ({
             <Typography variant="h4">
               Prediction
             </Typography>
-            <Typography variant="body1">
-              BE Rank and Priority Analyser
+            <Container maxWidth="sm">
+            <Typography variant="caption">
+              BE Aspirants are required to enter their obtained/expected rank below. The prediction is based on the cutoff rank of IOE admission list of year 2077.
             </Typography>
-            <Typography variant="subtitle2">
-              Year - 2077
-            </Typography>
+            </Container>
             <Search
               onPressEnter={onClickPredict}
               rank={rank}
