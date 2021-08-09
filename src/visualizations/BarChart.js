@@ -36,6 +36,7 @@ const foo = (data) => {
           program_name: data["program_name"],
           fill: colorsMapping[data["probablity"]],
           probString: data["probablity"] + " chance",
+          type: data["type"],
         };
       })
       // .sort((a, b) => a.program_name - b.program_name)
@@ -78,7 +79,7 @@ const CustomizedTooltip = ({ active, payload, label }) => {
         <p>{payload[0].payload["college_name"]}</p>
         <p>
           {payload[0].payload["program_name"]}{" "}
-          {" " + payload[0].payload["type"] === "R" ? "Regular" : "Full Fee"}
+          {payload[0].payload["type"] === "R" ? "Regular" : "Full Fee"}
         </p>
       </div>
     );
@@ -103,6 +104,7 @@ const MyBarChart = ({ selectedCollege, selectedFaculty, rank }) => {
 
     api.post("/prediction/", data).then((res) => {
       setData(foo(res.data));
+
       setCurrentFrame(
         foo(res.data).slice(
           0,
@@ -113,6 +115,7 @@ const MyBarChart = ({ selectedCollege, selectedFaculty, rank }) => {
     });
   }, [selectedCollege, selectedFaculty, rank]);
 
+  console.log("current frame", currentFrame);
   // data1 = foo(data);
   // data1 = data1.slice(0, 10);
   // data1.sort((a, b) => (a.probVal > b.probVal ? -1 : 1));

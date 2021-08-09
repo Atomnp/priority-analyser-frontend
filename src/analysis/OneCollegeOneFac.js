@@ -25,6 +25,15 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
+// const
+
+const keyMapping = {
+  cutoff: "Highest Rank",
+  cutin: " Lowest Rank",
+  cutoffMarks: "Least Marks",
+  seats: "Seats",
+};
+
 const theme = createTheme();
 
 theme.typography.h4 = {
@@ -116,11 +125,15 @@ export default function CustomizedTables({ selectedCollege, selectedFaculty }) {
               <TableBody>
                 {/* we always have paying data but regular data chai gov college ko lagi matra hunxa so mapping through payingData */}
                 {Object.keys(payingData).map((key) => {
-                  if (key !== "college" && key !== "program") {
+                  if (
+                    key !== "college" &&
+                    key !== "program" &&
+                    key !== "cutinMarks"
+                  ) {
                     return (
                       <StyledTableRow key={key}>
                         <TableCell component="th" scope="row">
-                          {key}
+                          {keyMapping[key]}
                         </TableCell>
                         {hasRegular && (
                           <TableCell>{regularData[key]}</TableCell>
