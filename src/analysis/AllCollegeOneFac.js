@@ -1,24 +1,33 @@
-import "@blueprintjs/core/lib/css/blueprint.css";
 import React, { useState, useEffect } from "react";
 import api from "../lib/api";
 
 import MyChart from "../visualizations/RangeChart";
 import SeatPieChart from "../visualizations/PieChart";
-import { Typography, Button, Grid } from "@material-ui/core";
+import { Typography, Button, Grid, createTheme } from "@material-ui/core";
 import { ResponsiveContainer } from "recharts";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => {
-  /* we can do some javascript with theme object here */
-
   return {
-    charts: {
-      [theme.breakpoints.up("sm")]: {
-        display: "flex",
-      },
+    root: {},
+    primaryColor: {
+      color: theme.palette.primary.main,
+      fontSize: theme.breakpoints.xs,
     },
   };
 });
+
+const theme = createTheme();
+
+theme.typography.h4 = {
+  fontSize: "1.2rem",
+  "@media (min-width:600px)": {
+    fontSize: "1rem",
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: "1.8rem",
+  },
+};
 
 /* transform data to the form that is easy to display in graph */
 const transform = (data) => {
@@ -33,23 +42,24 @@ const transform = (data) => {
     "#90caf9",
   ];
 
-  return data.map((data, i) => {
-    return {
-      faculty: `${data["faculty"]} ${data["type"]}`,
-      lower: data["lowerLimit"],
-      /* to stack data as per required by graph */
-      upper_minus_lower: data["upperLimit"] - data["lowerLimit"],
-      seats: Number(data["seats"]),
-      college: `${data["college"]} ${data["type"]}`,
-      fill: colors[i % 8],
-      college_name: data["college_name"],
-      program_name: data["program_name"],
-    };
-  });
+  return data
+    .map((data, i) => {
+      return {
+        faculty: `${data["faculty"]} ${data["type"]}`,
+        lower: data["lowerLimit"],
+        /* to stack data as per required by graph */
+        upper_minus_lower: data["upperLimit"] - data["lowerLimit"],
+        seats: Number(data["seats"]),
+        college: `${data["college"]} ${data["type"]}`,
+        fill: colors[i % 8],
+        college_name: data["college_name"],
+        program_name: data["program_name"],
+      };
+    })
+    .sort((a, b) => a.lower - b.lower);
 };
-const OneCollegeOneFac = ({ facultyName }) => {
-  let classes = useStyles();
-
+const AllCollegeOneFac = ({ facultyName }) => {
+  const classes = useStyles();
   const noOfDataPerFrame = 8;
   const [data, setData] = useState([]);
   const [dataFrameNo, setDataFrameNo] = useState(0);
@@ -75,9 +85,17 @@ const OneCollegeOneFac = ({ facultyName }) => {
   }, [facultyName]);
   return (
     <>
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography variant="h4">Range Chart For Each Faculty</Typography>
+      <Grid justify="center" container>
+        <Grid item xs={9}>
+          <ThemeProvider theme={theme}>
+            <Typography
+              align="center"
+              className={classes.primaryColor}
+              variant="h4"
+            >
+              {currentFrame[0] ? currentFrame[0].program_name : ""}
+            </Typography>
+          </ThemeProvider>
         </Grid>
 
         <Grid item xs={12} sm={6}>
@@ -146,4 +164,4 @@ const OneCollegeOneFac = ({ facultyName }) => {
     </>
   );
 };
-export default OneCollegeOneFac;
+export default AllCollegeOneFac;

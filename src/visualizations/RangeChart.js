@@ -26,14 +26,12 @@ const CustomizedTooltip = ({ active, payload, label }) => {
           whiteSpace: "nowrap",
         }}
       >
-        <p className="desc">
+        <p>
           {payload[0].payload["program_name"]}{" "}
           {" " + payload[0].payload["type"] === "R" ? "Regular" : "Full Fee"}
         </p>
-        <p className="desc">{payload[0].payload["college_name"]}</p>
-        <p className="label">{`lower= ${
-          payload[0].payload["lower"]
-        } , upper =  ${
+        <p>{payload[0].payload["college_name"]}</p>
+        <p>{`lower= ${payload[0].payload["lower"]} , upper =  ${
           payload[0].payload["upper_minus_lower"] + payload[0].payload["lower"]
         }`}</p>
         {/* <p className="intro">{getIntroOfPage(label)}</p> */}

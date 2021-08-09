@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import {
   lightBlue,
   blueGrey,
@@ -48,6 +48,8 @@ function App() {
   // const [selectedYear, setSelectedYear] = useState("");
   const [selectedFaculty, setSelectedFaculty] = useState("All");
 
+  const [isAnalysisPage, setIsAnalysisPage] = useState(false);
+
   const handleCollegeSelect = (college) => {
     setSelectedFaculty("All");
     setSelectedCollege(college);
@@ -67,8 +69,11 @@ function App() {
     if (selectedCollege === "All") {
       // if (true) {
       api.get("/programs/").then(({ data }) => {
-        data.unshift({ code: "All", name: "All" });
+        if (!isAnalysisPage) {
+          data.unshift({ code: "All", name: "All" });
+        }
         setFacultyList(data);
+        setSelectedFaculty(data[0].code);
       });
     } else {
       api
@@ -81,11 +86,13 @@ function App() {
               name: program["programs"].name,
             };
           });
-          formated.unshift({ code: "All", name: "All" });
+          if (!(isAnalysisPage && selectedCollege === "All")) {
+            formated.unshift({ code: "All", name: "All" });
+          }
           setFacultyList(formated);
         });
     }
-  }, [selectedCollege]);
+  }, [selectedCollege, isAnalysisPage]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -113,6 +120,7 @@ function App() {
                   setRank={setRank}
                   setShowResult={setShowresult}
                   showResult={showresult}
+                  setIsAnalysisPage={setIsAnalysisPage}
                 />
               </Route>
               <Route path="/predict" exact>
@@ -123,12 +131,14 @@ function App() {
                   setRank={setRank}
                   setShowResult={setShowresult}
                   showResult={showresult}
+                  setIsAnalysisPage={setIsAnalysisPage}
                 />
               </Route>
               <Route path="/analyse" exact>
                 <AnalysisPage
                   selectedCollege={selectedCollege}
                   selectedFaculty={selectedFaculty}
+                  setIsAnalysisPage={setIsAnalysisPage}
                 />
               </Route>
               <Route>

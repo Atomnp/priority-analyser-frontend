@@ -26,16 +26,21 @@ const foo = (data) => {
     "very low": 1,
   };
 
-  return data.map((data) => {
-    return {
-      probVal: mapping[data["probablity"]],
-      label: `${data["college"]} ${data["program"]} ${data["type"]}`,
-      college_name: data["college_name"],
-      program_name: data["program_name"],
-      fill: colorsMapping[data["probablity"]],
-      probString: data["probablity"] + " chance",
-    };
-  });
+  return (
+    data
+      .map((data) => {
+        return {
+          probVal: mapping[data["probablity"]],
+          label: `${data["college"]} ${data["program"]} ${data["type"]}`,
+          college_name: data["college_name"],
+          program_name: data["program_name"],
+          fill: colorsMapping[data["probablity"]],
+          probString: data["probablity"] + " chance",
+        };
+      })
+      // .sort((a, b) => a.program_name - b.program_name)
+      .sort((a, b) => Number(a.probVal) - Number(b.probVal))
+  );
 };
 
 const CustomLabel = (a) => {
@@ -70,8 +75,8 @@ const CustomizedTooltip = ({ active, payload, label }) => {
           payload[0].payload["upper_minus_lower"] + payload[0].payload["lower"]
         }`}</p> */}
         {/* <p className="intro">{getIntroOfPage(label)}</p> */}
-        <p className="desc">{payload[0].payload["college_name"]}</p>
-        <p className="desc">
+        <p>{payload[0].payload["college_name"]}</p>
+        <p>
           {payload[0].payload["program_name"]}{" "}
           {" " + payload[0].payload["type"] === "R" ? "Regular" : "Full Fee"}
         </p>

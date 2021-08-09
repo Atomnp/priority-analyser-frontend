@@ -1,9 +1,14 @@
-import "@blueprintjs/core/lib/css/blueprint.css";
 import OneCollegeOneFac from "./OneCollegeOneFac";
 import AllCollegeOneFac from "./AllCollegeOneFac";
 import OneCollegeAllFac from "./OneCollegeAllFac";
 
-const AnalysisPage = ({ selectedCollege, selectedFaculty }) => {
+const AnalysisPage = ({
+  selectedCollege,
+  selectedFaculty,
+  setIsAnalysisPage,
+}) => {
+  setIsAnalysisPage(true);
+
   return (
     <div>
       {selectedCollege === "All" && selectedFaculty !== "All" && (

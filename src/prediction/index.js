@@ -35,6 +35,7 @@ const PredictionPage = ({
   setRank,
   setShowResult,
   showResult,
+  setIsAnalysisPage,
 }) => {
   // const [showResult, setShowResult] = useState(false);
   const classes = useStyles();
@@ -44,7 +45,7 @@ const PredictionPage = ({
       setShowResult(true);
     }
   };
-
+  setIsAnalysisPage(false);
   return showResult ? (
     <div>
       <Hidden smUp implementation="css">

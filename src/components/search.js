@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   margin: {
     width: "90%",
     [theme.breakpoints.up("md")]: {
-      width: "70%",
+      width: "50%",
     },
     marginTop: "2rem",
     marginLeft: "auto",
@@ -43,6 +43,7 @@ export default function InputAdornments({ rank, onRankChange, onPressEnter }) {
               onPressEnter();
             }
           }}
+          style={{ borderRadius: "2rem" }}
           // labelWidth={60}
         />
       </FormControl>
