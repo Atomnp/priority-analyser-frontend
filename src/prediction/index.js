@@ -1,21 +1,38 @@
-import "@blueprintjs/core/lib/css/blueprint.css";
 import React from "react";
 import { Typography, Button, Hidden } from "@material-ui/core";
-
-import { createUseStyles } from "react-jss";
-import Barsvg from "../static/barchart.svg";
+// import Barsvg from "../static";
+// import Barsvg from "../static/3dchart.png";
+import { makeStyles } from "@material-ui/core/styles";
 
 import Search from "../components/search";
 import MyChart from "../visualizations/BarChart";
 
-const useStyles = createUseStyles({
-  App: {
-    padding: "1rem 0",
-    // marginLeft: "auto",
-    // marginRight: "auto",
-    // textAlign: "center",
-  },
+// const useStyles = createUseStyles({
+//   App: {
+//     padding: "1rem 0",
+//     // marginLeft: "auto",
+//     // marginRight: "auto",
+//     // textAlign: "center",
+//   },
+// });
+const useStyles = makeStyles((theme) => {
+  return {
+    App: {
+      padding: "1rem 0",
+      // marginLeft: "auto",
+      // marginRight: "auto",
+      // textAlign: "center",
+    },
+    primaryColor: {
+      color: theme.palette.primary.main,
+    },
+  };
 });
+// const theme = createTheme({
+//   typography: {
+//     fontFamily: ['"Segoe UI Symbol"'].join(","),
+//   },
+// });
 
 const PredictionPage = ({
   selectedCollege,
@@ -24,16 +41,17 @@ const PredictionPage = ({
   setRank,
   setShowResult,
   showResult,
+  setIsAnalysisPage,
 }) => {
   // const [showResult, setShowResult] = useState(false);
-  const styles = useStyles();
+  const classes = useStyles();
 
   const onClickPredict = () => {
     if (rank > 0) {
       setShowResult(true);
     }
   };
-
+  setIsAnalysisPage(false);
   return showResult ? (
     <div>
       <Hidden smUp implementation="css">
@@ -77,16 +95,22 @@ const PredictionPage = ({
       </Hidden>
     </div>
   ) : (
-    <div className={styles.App}>
+    <div className={classes.App}>
       <div style={{ textAlign: "center" }}>
-        <img
+        {/* <img
           style={{ margin: "0 auto" }}
-          width="10%"
+          width="40%"
           src={Barsvg}
           alt="bar chart svg"
-        ></img>
+        ></img> */}
       </div>
-      <Typography fontFamily align="center" variant="h4">
+      {/* <ThemeProvider theme={theme}> */}
+      <Typography
+        style={{ paddingTop: "4rem" }}
+        className={classes.primaryColor}
+        align="center"
+        variant="h5"
+      >
         Decide fast, Decide smart
         <Search
           onPressEnter={onClickPredict}
@@ -101,11 +125,13 @@ const PredictionPage = ({
             variant="contained"
             color="primary"
             disabled={rank <= 0}
+            style={{ marginTop: "2rem" }}
           >
             Predict
           </Button>
         </div>
       </Typography>
+      {/* </ThemeProvider> */}
     </div>
   );
 };

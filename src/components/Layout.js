@@ -8,10 +8,9 @@ import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Switch from "@material-ui/core/Switch";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
 import MobileSvg from "../static//IOE_Rankmobile.svg";
 import LogoSvg from "../static/ali_thulo_gap_vako.svg";
@@ -97,7 +96,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 function ResponsiveDrawer(props) {
   const { window } = props;
   const classes = useStyles();
@@ -109,13 +107,13 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <div
-        className={classes.mobAppBar}
-      >
+      <div className={classes.mobAppBar}>
         <img width="150" height="50" src={LogoSvg} alt="logo"></img>
       </div>
       <div className={classes.toolbar} />
-      <Typography variant="button" className={classes.subtitle}>Filters</Typography>
+      <Typography variant="button" className={classes.subtitle}>
+        Filters
+      </Typography>
       {props.collegeList && (
         <Dropdown
           type={"College"}
@@ -175,7 +173,10 @@ function ResponsiveDrawer(props) {
               ></img>
             </Hidden>
 
-            <Switch checked={props.darkState} onChange={props.handleThemeChange} />
+            <Switch
+              checked={props.darkState}
+              onChange={props.handleThemeChange}
+            />
             <Hidden xsDown implementation="css">
               <NavLink
                 className={classes.navLink}
@@ -191,7 +192,6 @@ function ResponsiveDrawer(props) {
               >
                 <Typography variant="button">Analyse</Typography>
               </NavLink>
-
             </Hidden>
           </Toolbar>
         </AppBar>

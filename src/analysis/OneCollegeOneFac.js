@@ -8,14 +8,34 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import api from "../lib/api";
-import Grid from "@material-ui/core/Grid";
+import {
+  Grid,
+  Typography,
+  ThemeProvider,
+  createTheme,
+} from "@material-ui/core";
 import SeatPieChart from "../visualizations/PieChart";
-
-const useStyles = makeStyles({
-  // table: {
-  //   minWidth: 400,
-  // },
+const useStyles = makeStyles((theme) => {
+  return {
+    root: {},
+    primaryColor: {
+      color: theme.palette.primary.main,
+      fontSize: theme.breakpoints.xs,
+    },
+  };
 });
+
+const theme = createTheme();
+
+theme.typography.h4 = {
+  fontSize: "1.2rem",
+  "@media (min-width:600px)": {
+    fontSize: "1rem",
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: "1.8rem",
+  },
+};
 
 const transform = (data) => {
   let result = [];
@@ -42,6 +62,7 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 export default function CustomizedTables({ selectedCollege, selectedFaculty }) {
+  /* known bug: this page has horizonatl scroll we need to stop that */
   const classes = useStyles();
   const [regularData, setRegularData] = useState();
   const [payingData, setPayingData] = useState();
@@ -69,6 +90,18 @@ export default function CustomizedTables({ selectedCollege, selectedFaculty }) {
 
   return (
     <Grid spacing={5} justify="center" container>
+      <Grid item xs={9}>
+        <ThemeProvider theme={theme}>
+          <Typography
+            align="center"
+            className={classes.primaryColor}
+            variant="h4"
+          >
+            {payingData ? payingData.college + " " + payingData.program : ""}
+          </Typography>
+        </ThemeProvider>
+      </Grid>
+
       <Grid style={{ margin: "0 auto" }} item xs={10} md={4}>
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
@@ -83,15 +116,19 @@ export default function CustomizedTables({ selectedCollege, selectedFaculty }) {
               <TableBody>
                 {/* we always have paying data but regular data chai gov college ko lagi matra hunxa so mapping through payingData */}
                 {Object.keys(payingData).map((key) => {
-                  return (
-                    <StyledTableRow key={key}>
-                      <TableCell component="th" scope="row">
-                        {key}
-                      </TableCell>
-                      {hasRegular && <TableCell>{regularData[key]}</TableCell>}
-                      <TableCell>{payingData[key]}</TableCell>
-                    </StyledTableRow>
-                  );
+                  if (key !== "college" && key !== "program") {
+                    return (
+                      <StyledTableRow key={key}>
+                        <TableCell component="th" scope="row">
+                          {key}
+                        </TableCell>
+                        {hasRegular && (
+                          <TableCell>{regularData[key]}</TableCell>
+                        )}
+                        <TableCell>{payingData[key]}</TableCell>
+                      </StyledTableRow>
+                    );
+                  }
                 })}
               </TableBody>
             )}
