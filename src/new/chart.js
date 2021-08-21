@@ -30,34 +30,18 @@ const foo = (data) => {
     data
       .map((data) => {
         return {
-          probVal: mapping[data["probablity"]],
-          label: `${data["college"]} ${data["program"]} ${data["type"]}`,
-          college_name: data["college_name"],
+          label: `${data["collegeprogram__college"]}`,
+          //   college_name: data["college_name"],
+          count: data["count"],
           program_name: data["program_name"],
-          fill: colorsMapping[data["probablity"]],
-          probString: data["probablity"] + " chance",
-          type: data["type"],
+          fill: "red",
         };
       })
       // .sort((a, b) => a.program_name - b.program_name)
-      .sort((a, b) => Number(a.probVal) - Number(b.probVal))
+      .sort((a, b) => Number(a.count) - Number(b.count))
   );
 };
 
-const CustomLabel = (a) => {
-  return <p>a</p>;
-  // return (
-  //   <text
-  //     dy={-4}
-  //     fontSize="16"
-  //     fontFamily="sans-serif"
-  //     fill={"fill"}
-  //     textAnchor="middle"
-  //   >
-  //     {value}%
-  //   </text>
-  // );
-};
 const CustomizedTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
@@ -96,25 +80,6 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
   const [dataFrameNo, setDataFrameNo] = useState(0);
   const [currentFrame, setCurrentFrame] = useState([]);
 
-  //   useEffect(() => {
-  //     const data = new FormData();
-  //     data.set("college", selectedCollege);
-  //     data.set("faculty", selectedFaculty);
-  //     data.set("rank", rank);
-
-  //     api.post("/prediction/", data).then((res) => {
-  //       setData(foo(res.data));
-
-  //       setCurrentFrame(
-  //         foo(res.data).slice(
-  //           0,
-  //           noOfDataPerFrame > data.length ? data.length : noOfDataPerFrame
-  //         )
-  //       );
-  //       setDataFrameNo(0);
-  //     });
-  //   }, [selectedCollege, selectedFaculty, rank]);
-
   useEffect(() => {
     /* should make a request to api includeing college selected,min-rank and max-rank */
     if (
@@ -128,8 +93,16 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
     form.append("max_rank", maxRank);
     form.append("college", selectedCollege);
 
-    api.post("/rank/", form).then((data) => {
-      console.log(data);
+    api.post("/rank/", form).then((res) => {
+      setData(res.data);
+      setCurrentFrame(
+        foo(res.data).slice(
+          0,
+          noOfDataPerFrame > data.length ? data.length : noOfDataPerFrame
+        )
+      );
+      setDataFrameNo(0);
+      console.log(res.data);
     });
   }, [minRank, maxRank, selectedCollege]);
 
@@ -152,12 +125,10 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
             bottom: 5,
           }}
         >
-          {/* <CartesianGrid strokeDasharray="3 3" /> */}
-          {/* <CartesianGrid strokeDasharray="3 3" /> */}
           <XAxis
             axisLine={false}
             tickLine={false}
-            domain={[0, 5]}
+            domain={[0, 100]}
             height={5}
             tickCount={0}
             type="number"
@@ -176,54 +147,10 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
             content={<CustomizedTooltip />}
           />
 
-          {/* <Legend /> */}
-
-          {/* <Bar name="Score" background dataKey="probVal">
-            {currentFrame.map((entry, index) => (
-              <React.Fragment key={entry["label"]}>
-                <Cell key={entry["label"]} fill={entry.color} />
-                <LabelList
-                  key={entry["label"]}
-                  dataKey="probString"
-                  position="inside"
-                  fill="#ffffff"
-                />
-              </React.Fragment>
-            ))}
-          </Bar> */}
-          <Bar
-            radius={[10, 10, 10, 10]}
-            barSize={15}
-            // label={true}
-            // name="probString"
-            // label={CustomLabel}
-            // stroke="#FF0000"
-
-            dataKey="probVal"
-          />
+          <Bar radius={[10, 10, 10, 10]} barSize={15} dataKey="count" />
         </BarChart>
       </ResponsiveContainer>
-      <div
-        style={{
-          display: "flex",
-          padding: "1rem",
-          justifyContent: "space-around",
-        }}
-      >
-        {Object.keys(colorsMapping).map((prob) => (
-          <div key={prob} style={{ display: "flex" }}>
-            <div
-              style={{
-                height: "1rem",
-                width: "1rem",
-                backgroundColor: colorsMapping[prob],
-                marginRight: "0.5rem",
-              }}
-            ></div>
-            <p>{prob}</p>
-          </div>
-        ))}
-      </div>
+
       <div
         style={{
           padding: "0 3rem",
