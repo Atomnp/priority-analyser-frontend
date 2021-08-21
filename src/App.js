@@ -14,6 +14,7 @@ import PredictionPage from "./prediction";
 import AnalysisPage from "./analysis";
 import Layout from "./components/Layout";
 import api from "./lib/api";
+import RangeFilter from "./new";
 
 function App() {
   const [darkState, setDarkState] = useState(false);
@@ -39,6 +40,8 @@ function App() {
   };
 
   const [rank, setRank] = useState("");
+  const [minRank, setMinRank] = useState("");
+  const [maxRank, setMaxRank] = useState("");
   const [showresult, setShowresult] = useState(false);
   const [collegeList, setCollegeList] = useState([]);
   // const [yearList, setYearList] = useState([]);
@@ -49,6 +52,8 @@ function App() {
   const [selectedFaculty, setSelectedFaculty] = useState("All");
 
   const [isAnalysisPage, setIsAnalysisPage] = useState(false);
+  // const [isNewPage, setIsNewPage] = useState(false);
+  const [currentPage, setCurrentPage] = useState(false);
 
   const handleCollegeSelect = (college) => {
     setSelectedFaculty("All");
@@ -110,6 +115,11 @@ function App() {
             showResult={showresult}
             darkState={darkState}
             handleThemeChange={handleThemeChange}
+            currentPage={currentPage}
+            minRank={minRank}
+            maxRank={maxRank}
+            onMinRankChange={setMinRank}
+            onMaxRankChange={setMaxRank}
           >
             <Switch>
               <Route path="/" exact>
@@ -121,6 +131,7 @@ function App() {
                   setShowResult={setShowresult}
                   showResult={showresult}
                   setIsAnalysisPage={setIsAnalysisPage}
+                  setCurrentPage={setCurrentPage}
                 />
               </Route>
               <Route path="/predict" exact>
@@ -132,6 +143,7 @@ function App() {
                   setShowResult={setShowresult}
                   showResult={showresult}
                   setIsAnalysisPage={setIsAnalysisPage}
+                  setCurrentPage={setCurrentPage}
                 />
               </Route>
               <Route path="/analyse" exact>
@@ -139,6 +151,15 @@ function App() {
                   selectedCollege={selectedCollege}
                   selectedFaculty={selectedFaculty}
                   setIsAnalysisPage={setIsAnalysisPage}
+                  setCurrentPage={setCurrentPage}
+                />
+              </Route>
+              <Route path="/new" exact>
+                <RangeFilter
+                  setCurrentPage={setCurrentPage}
+                  minRank={minRank}
+                  maxRank={maxRank}
+                  selectedCollege={selectedCollege}
                 />
               </Route>
               <Route>

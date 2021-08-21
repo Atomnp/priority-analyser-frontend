@@ -6,7 +6,9 @@ const AnalysisPage = ({
   selectedCollege,
   selectedFaculty,
   setIsAnalysisPage,
+  setCurrentPage,
 }) => {
+  setCurrentPage("analyse");
   setIsAnalysisPage(true);
 
   return (

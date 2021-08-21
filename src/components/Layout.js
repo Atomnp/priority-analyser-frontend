@@ -17,6 +17,7 @@ import LogoSvg from "../static/ali_thulo_gap_vako.svg";
 
 import Dropdown from "./Dropdown";
 import BottomNav from "./BottomNav";
+import TextField from "@material-ui/core/TextField";
 
 const drawerWidth = 240;
 
@@ -107,8 +108,10 @@ function ResponsiveDrawer(props) {
         <img width="150" height="50" src={LogoSvg} alt="logo"></img>
       </div>
 
-      <Typography variant="button" component="h3" className={classes.subtitle}>Filters</Typography>
-      
+      <Typography variant="button" component="h3" className={classes.subtitle}>
+        Filters
+      </Typography>
+
       {props.collegeList && (
         <Dropdown
           type={"College"}
@@ -117,7 +120,7 @@ function ResponsiveDrawer(props) {
           handleSelect={props.setSelectedCollege}
         />
       )}
-      {props.facultyList && (
+      {props.currentPage !== "new" && props.facultyList && (
         <Dropdown
           type={"Faculty"}
           options={props.facultyList.map((item) => item.code)}
@@ -125,15 +128,45 @@ function ResponsiveDrawer(props) {
           handleSelect={props.setSelectedFaculty}
         />
       )}
+      {props.currentPage === "new" && (
+        <TextField
+          id="min-rank"
+          label="min-rank"
+          type="number"
+          value={props.minRank}
+          onChange={(event) => {
+            props.onMinRankChange(event.target.value);
+          }}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="filled"
+        />
+      )}
+      {props.currentPage === "new" && (
+        <TextField
+          id="max-rank"
+          label="max-rank"
+          type="number"
+          value={props.maxRank}
+          onChange={(event) => {
+            props.onMaxRankChange(event.target.value);
+          }}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="filled"
+        />
+      )}
     </div>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <div>
       <div className={classes.root}>
-
         {/* appbar starts here */}
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
@@ -187,6 +220,13 @@ function ResponsiveDrawer(props) {
               >
                 <Typography variant="button">Analyse</Typography>
               </NavLink>
+              <NavLink
+                className={classes.navLink}
+                activeClassName={classes.activeLink}
+                to="/new"
+              >
+                <Typography variant="button">New</Typography>
+              </NavLink>
             </Hidden>
           </Toolbar>
         </AppBar>
@@ -231,7 +271,6 @@ function ResponsiveDrawer(props) {
           {props.children}
         </main>
         {/* main body ends here */}
-      
       </div>
 
       {/* bottom navigation for mobile starts here */}
@@ -241,7 +280,6 @@ function ResponsiveDrawer(props) {
         </div>
       </Hidden>
       {/* bottom navigation for mobile ends here */}
-
     </div>
   );
 }
