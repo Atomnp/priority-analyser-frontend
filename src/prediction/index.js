@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Typography, Button, Hidden } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Barsvg from "../static/1final.svg";
@@ -39,7 +39,10 @@ const PredictionPage = ({
   setCurrentPage,
 }) => {
   setIsAnalysisPage(false);
-  setCurrentPage("predict");
+  useEffect(() => {
+    setCurrentPage("predict");
+  }, []);
+
   // const [showResult, setShowResult] = useState(false);
   const classes = useStyles();
 

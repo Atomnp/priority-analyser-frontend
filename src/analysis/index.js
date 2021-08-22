@@ -1,6 +1,7 @@
 import OneCollegeOneFac from "./OneCollegeOneFac";
 import AllCollegeOneFac from "./AllCollegeOneFac";
 import OneCollegeAllFac from "./OneCollegeAllFac";
+import { useEffect } from "react";
 
 const AnalysisPage = ({
   selectedCollege,
@@ -8,7 +9,11 @@ const AnalysisPage = ({
   setIsAnalysisPage,
   setCurrentPage,
 }) => {
-  setCurrentPage("analyse");
+  // setCurrentPage("analyse");
+  useEffect(() => {
+    setCurrentPage("analyse");
+  }, []);
+
   setIsAnalysisPage(true);
 
   return (

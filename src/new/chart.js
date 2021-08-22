@@ -41,14 +41,24 @@ const CustomizedTooltip = ({ active, payload, label }) => {
 
   return null;
 };
-
+const colors = [
+  "#0d47a1",
+  "#1565c0",
+  "#1976d2",
+  "#1e88e5",
+  "#2196f3",
+  "#42a5f5",
+  "#64b5f6",
+  "#90caf9",
+];
 const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
   /* transform data to the form that is easy to display in graph */
   const transformData = (data) => {
     // console.log("inside transformData", data);
+
     return (
       data
-        .map((data) => {
+        .map((data, i) => {
           const label =
             selectedCollege === "All"
               ? "collegeprogram__college"
@@ -58,7 +68,7 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
             //   college_name: data["college_name"],
             count: data["count"],
             // program_name: data["program_name"],
-            fill: "red",
+            fill: "#2196f3",
           };
         })
         // .sort((a, b) => a.program_name - b.program_name)
@@ -90,9 +100,8 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
     form.append("college", selectedCollege);
 
     api.post("/rank/", form).then((res) => {
-      let a = transformData(res.data);
-      //   console.log(a);
-      setData(a);
+      console.log(res.data);
+      setData(transformData(res.data));
       setDataFrameNo(0);
     });
   };
@@ -107,13 +116,6 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
     );
   }, [data]);
 
-  //   console.log("current frame", currentFrame);
-  // data1 = foo(data);
-  // data1 = data1.slice(0, 10);
-  // data1.sort((a, b) => (a.probVal > b.probVal ? -1 : 1));
-  // console.log("current frame", currentFrame);
-
-  // console.log("current frame", currentFrame, data);
   if (data.length == 0)
     return (
       <div>
@@ -123,7 +125,7 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
   return (
     currentFrame.length > 0 && (
       <div>
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="70%" height={400}>
           {/* <h1>for rank =123</h1> */}
           <BarChart
             layout="vertical"
@@ -135,7 +137,7 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
               bottom: 5,
             }}
           >
-            <XAxis domain={[0, 100]} height={5} type="number" />
+            <XAxis domain={[0, 200]} height={50} tickCount={10} type="number" />
             <YAxis
               type="category"
               dataKey={"label"}
