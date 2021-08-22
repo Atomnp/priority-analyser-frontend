@@ -56,7 +56,7 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
           return {
             label: `${data[label]}`,
             //   college_name: data["college_name"],
-            count: data["count"],
+            count: data["the_count"],
             // program_name: data["program_name"],
             fill: "red",
           };
@@ -68,8 +68,8 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
 
   const noOfDataPerFrame = 8;
   let [data, setData] = useState([]);
-  /* data is shown "noOfDataFrame"(eg.10) at a time so this variable helps to determine which frame is that, 
-  for example initionally it is zero and if i press next then data that needs to be 
+  /* data is shown "noOfDataFrame"(eg.10) at a time so this variable helps to determine which frame is that,
+  for example initionally it is zero and if i press next then data that needs to be
   displayed are data no 10 to data no 20 */
   const [dataFrameNo, setDataFrameNo] = useState(0);
   let [currentFrame, setCurrentFrame] = useState([]);
