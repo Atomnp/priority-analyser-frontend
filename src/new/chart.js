@@ -38,7 +38,7 @@ const foo = (data) => {
         };
       })
       // .sort((a, b) => a.program_name - b.program_name)
-      .sort((a, b) => Number(a.count) - Number(b.count))
+      .sort((a, b) => Number(b.count) - Number(a.count))
   );
 };
 
@@ -54,12 +54,6 @@ const CustomizedTooltip = ({ active, payload, label }) => {
           whiteSpace: "nowrap",
         }}
       >
-        {/* <p className="label">{`${label} : lower= ${
-          payload[0].payload["college_name"]
-        } , upper =  ${
-          payload[0].payload["upper_minus_lower"] + payload[0].payload["lower"]
-        }`}</p> */}
-        {/* <p className="intro">{getIntroOfPage(label)}</p> */}
         <p>{payload[0].payload["college_name"]}</p>
         <p>
           {payload[0].payload["program_name"]}{" "}
@@ -94,7 +88,7 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
     form.append("college", selectedCollege);
 
     api.post("/rank/", form).then((res) => {
-      setData(res.data);
+      setData(foo(res.data));
       setCurrentFrame(
         foo(res.data).slice(
           0,
@@ -125,14 +119,7 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
             bottom: 5,
           }}
         >
-          <XAxis
-            axisLine={false}
-            tickLine={false}
-            domain={[0, 100]}
-            height={5}
-            tickCount={0}
-            type="number"
-          />
+          <XAxis domain={[0, 100]} height={5} type="number" />
           <YAxis
             type="category"
             dataKey={"label"}
@@ -155,6 +142,7 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
         style={{
           padding: "0 3rem",
           marginBottom: "2rem",
+          marginTop: "2rem",
           display: "flex",
           justifyContent: "center",
         }}
