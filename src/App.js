@@ -7,7 +7,7 @@ import {
   lightBlue,
   blueGrey,
   deepOrange,
-  yellow,
+  orange
 } from "@material-ui/core/colors";
 
 import PredictionPage from "./prediction";
@@ -15,12 +15,13 @@ import AnalysisPage from "./analysis";
 import Layout from "./components/Layout";
 import api from "./lib/api";
 import RangeFilter from "./new";
+import FAQ from "./faq";
 
 function App() {
   const [darkState, setDarkState] = useState(false);
   const palletType = darkState ? "dark" : "light";
   const mainPrimaryColor = darkState ? blueGrey[800] : lightBlue[800];
-  const mainSecondaryColor = darkState ? deepOrange[400] : yellow[800];
+  const mainSecondaryColor = darkState ? deepOrange[400] : orange[800];
   const theme = createTheme({
     palette: {
       type: palletType,
@@ -161,6 +162,11 @@ function App() {
                   minRank={minRank}
                   maxRank={maxRank}
                   selectedCollege={selectedCollege}
+                />
+              </Route>
+              <Route path="/faq" exact>
+                <FAQ
+                  setCurrentPage={setCurrentPage}
                 />
               </Route>
               <Route>

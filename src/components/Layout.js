@@ -91,10 +91,14 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "2px solid",
     borderBottomColor: theme.palette.secondary.light,
   },
+  textfield: {
+    margin: "0.8rem 2.2rem 0.8rem 1.8rem",
+
+  }
 }));
 
 function ResponsiveDrawer(props) {
-  const { window } = props;
+  const { window, location } = props;
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -130,8 +134,9 @@ function ResponsiveDrawer(props) {
       )}
       {props.currentPage === "priority" && (
         <TextField
+          className={classes.textfield}
           id="min-rank"
-          label="min-rank"
+          label="Minimum Rank"
           type="number"
           value={props.minRank}
           onChange={(event) => {
@@ -140,13 +145,14 @@ function ResponsiveDrawer(props) {
           InputLabelProps={{
             shrink: true,
           }}
-          variant="filled"
+          // variant="outlined"
         />
       )}
       {props.currentPage === "priority" && (
         <TextField
+          className={classes.textfield}
           id="max-rank"
-          label="max-rank"
+          label="Maximum Rank"
           type="number"
           value={props.maxRank}
           onChange={(event) => {
@@ -155,7 +161,7 @@ function ResponsiveDrawer(props) {
           InputLabelProps={{
             shrink: true,
           }}
-          variant="filled"
+          // variant="outlined"
         />
       )}
     </div>
@@ -227,13 +233,21 @@ function ResponsiveDrawer(props) {
               >
                 <Typography variant="button">Priority</Typography>
               </NavLink>
+              <NavLink
+                className={classes.navLink}
+                activeClassName={classes.activeLink}
+                to="/faq"
+              >
+                <Typography variant="button">FAQ</Typography>
+              </NavLink>
             </Hidden>
           </Toolbar>
         </AppBar>
         {/* appbar ends here */}
 
         {/* drawer starts here */}
-        <nav className={classes.drawer}>
+
+        {props.currentPage !== 'faq' && <nav className={classes.drawer}>
           <Hidden smUp implementation="css">
             <Drawer
               container={container}
@@ -262,7 +276,7 @@ function ResponsiveDrawer(props) {
               {drawer}
             </Drawer>
           </Hidden>
-        </nav>
+        </nav>}
         {/* drawer ends here  */}
 
         {/* main body starts here */}

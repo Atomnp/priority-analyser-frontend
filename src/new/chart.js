@@ -114,6 +114,12 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
   // console.log("current frame", currentFrame);
 
   // console.log("current frame", currentFrame, data);
+  if (data.length == 0)
+    return (
+      <div>
+        <h3>No students in this range!</h3>
+      </div>
+    );
   return (
     currentFrame.length > 0 && (
       <div>
