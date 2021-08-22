@@ -42,6 +42,7 @@ function App() {
   const [rank, setRank] = useState("");
   const [minRank, setMinRank] = useState("100");
   const [maxRank, setMaxRank] = useState("500");
+
   const [showresult, setShowresult] = useState(false);
   const [collegeList, setCollegeList] = useState([]);
   // const [yearList, setYearList] = useState([]);

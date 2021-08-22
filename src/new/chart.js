@@ -9,6 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+
 const colorsMapping = {
   "very high": "#69B34C",
   high: "#ACB334",
@@ -41,8 +42,8 @@ const foo = (data) => {
       .sort((a, b) => Number(b.count) - Number(a.count))
   );
 };
-
 const CustomizedTooltip = ({ active, payload, label }) => {
+  // console.log(payload);
   if (active && payload && payload.length) {
     return (
       <div
@@ -56,8 +57,8 @@ const CustomizedTooltip = ({ active, payload, label }) => {
       >
         <p>{payload[0].payload["college_name"]}</p>
         <p>
-          {payload[0].payload["program_name"]}{" "}
-          {payload[0].payload["type"] === "R" ? "Regular" : "Full Fee"}
+          {payload[0].payload["count"]}{" "}
+          {/* {payload[0].payload["type"] === "R" ? "Regular" : "Full Fee"} */}
         </p>
       </div>
     );
@@ -65,7 +66,31 @@ const CustomizedTooltip = ({ active, payload, label }) => {
 
   return null;
 };
+
 const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
+  /* transform data to the form that is easy to display in graph */
+  const transformData = (data) => {
+    // console.log("inside transformData", data);
+    return (
+      data
+        .map((data) => {
+          const label =
+            selectedCollege === "All"
+              ? "collegeprogram__college"
+              : "collegeprogram__program";
+          return {
+            label: `${data[label]}`,
+            //   college_name: data["college_name"],
+            count: data["the_count"],
+            program_name: data["program_name"],
+            fill: "red",
+          };
+        })
+        // .sort((a, b) => a.program_name - b.program_name)
+        .sort((a, b) => Number(a.count) - Number(b.count))
+    );
+  };
+
   const noOfDataPerFrame = 8;
   const [data, setData] = useState([]);
   /* data is shown "noOfDataFrame"(eg.10) at a time so this variable helps to determine which frame is that, 
@@ -74,7 +99,7 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
   const [dataFrameNo, setDataFrameNo] = useState(0);
   const [currentFrame, setCurrentFrame] = useState([]);
 
-  useEffect(() => {
+  const fetchData = () => {
     /* should make a request to api includeing college selected,min-rank and max-rank */
     if (
       Number(maxRank) < Number(minRank) ||
@@ -90,21 +115,24 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
     api.post("/rank/", form).then((res) => {
       setData(foo(res.data));
       setCurrentFrame(
-        foo(res.data).slice(
+        transformData(res.data).slice(
           0,
           noOfDataPerFrame > data.length ? data.length : noOfDataPerFrame
         )
       );
       setDataFrameNo(0);
-      console.log(res.data);
+      // console.log(res.data);
     });
-  }, [minRank, maxRank, selectedCollege]);
+  };
+  useEffect(fetchData, [minRank, maxRank, selectedCollege]);
 
   //   console.log("current frame", currentFrame);
   // data1 = foo(data);
   // data1 = data1.slice(0, 10);
   // data1.sort((a, b) => (a.probVal > b.probVal ? -1 : 1));
+  // console.log("current frame", currentFrame);
 
+  // console.log("current frame", currentFrame, data);
   return (
     <div>
       <ResponsiveContainer width="100%" height={400}>
@@ -156,6 +184,7 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
             if (dataFrameNo > 0) {
               let a = dataFrameNo - 1;
               let b = a * noOfDataPerFrame + noOfDataPerFrame;
+
               setCurrentFrame(
                 data.slice(
                   a * noOfDataPerFrame,
