@@ -25,7 +25,7 @@ const prows = [
 
 export function PredictionTable() {
   return (
-    <Grid style={{ margin: "0 auto" }} item xs={10} md={6}>
+    <Grid style={{ margin: "0 auto" }} item xs={10} md={12}>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
@@ -80,7 +80,7 @@ export function BasicTable({college}) {
   }, []);
 
   return (
-    <Grid style={{ margin: "0 auto" }} item xs={10} md={6}>
+    <Grid style={{ margin: "0 auto" }} item xs={10} md={12}>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>

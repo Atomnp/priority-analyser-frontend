@@ -7,6 +7,7 @@ import {
 import { useTheme } from '@material-ui/core/styles';
 import { PredictionTable, BasicTable } from './table.js';
 import Typography from "@material-ui/core/Typography";
+import Container from '@material-ui/core/Container';
 
 const data = {
     title: "FAQ",
@@ -31,37 +32,39 @@ const data = {
             title: "What are the Full Form of colleges?",
             content: <div>
                 <Typography variant="body1">The list of all the colleges of IOE with their code name and full form is shown below</Typography>
-                <BasicTable college={true} />,
+                <BasicTable college={true} />
                 </div>
         },
         {
             title: "What are the Full Form of programs?",
             content: <div>
                 <Typography variant="body1">The list of all the programs of IOE with their code name and full form is shown below</Typography>
-                <BasicTable college={false} />,
+                <BasicTable college={false} />
             </div>
         },
     ],
-};
-
-const styles = {
-    bgColor: grey[50],
-    titleTextColor: grey[900],
-    // rowTitleColor: "blue",
-    rowContentColor: grey[700],
-    arrowColor: lightBlue[900],
 };
 
 
 const FAQ = ({setCurrentPage}) => {
     setCurrentPage("faq");
     const theme = useTheme();
+
+    const styles = {
+        bgColor: theme.palette.background.default,
+        titleTextColor: theme.palette.text.primary,
+        rowTitleColor:  theme.palette.text.primary,
+        rowContentColor: theme.palette.text.secondary,
+        arrowColor: theme.palette.secondary.main,
+    };
     return (
         <div>
+            <Container maxWidth="sm">
             <Faq
                 data={data}
                 styles={styles}
-            />
+                />
+            </Container>
         </div>
     );
 };

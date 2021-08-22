@@ -75,8 +75,8 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
 
   const noOfDataPerFrame = 8;
   const [data, setData] = useState([]);
-  /* data is shown "noOfDataFrame"(eg.10) at a time so this variable helps to determine which frame is that, 
-  for example initionally it is zero and if i press next then data that needs to be 
+  /* data is shown "noOfDataFrame"(eg.10) at a time so this variable helps to determine which frame is that,
+  for example initionally it is zero and if i press next then data that needs to be
   displayed are data no 10 to data no 20 */
   const [dataFrameNo, setDataFrameNo] = useState(0);
   const [currentFrame, setCurrentFrame] = useState([]);
@@ -116,6 +116,12 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
   // console.log("current frame", currentFrame);
 
   // console.log("current frame", currentFrame, data);
+  if (data.length == 0)
+    return (
+      <div>
+        <h3>No students in this range!</h3>
+      </div>
+    );
   return (
     <div>
       <ResponsiveContainer width="100%" height={400}>
