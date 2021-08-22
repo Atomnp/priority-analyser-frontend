@@ -1,9 +1,11 @@
-import { useEffect } from "react";
-import api from "../lib/api";
 import Chart from "./chart";
+import { useEffect } from "react";
 
 const RangeFilter = ({ setCurrentPage, minRank, maxRank, selectedCollege }) => {
-  setCurrentPage("new");
+  // setCurrentPage("new");
+  useEffect(() => {
+    setCurrentPage("priority");
+  }, []);
 
   return (
     <div>

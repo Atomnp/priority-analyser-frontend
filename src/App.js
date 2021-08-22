@@ -155,7 +155,7 @@ function App() {
                   setCurrentPage={setCurrentPage}
                 />
               </Route>
-              <Route path="/new" exact>
+              <Route path="/priority" exact>
                 <RangeFilter
                   setCurrentPage={setCurrentPage}
                   minRank={minRank}

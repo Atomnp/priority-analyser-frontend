@@ -120,7 +120,7 @@ function ResponsiveDrawer(props) {
           handleSelect={props.setSelectedCollege}
         />
       )}
-      {props.currentPage !== "new" && props.facultyList && (
+      {props.currentPage !== "priority" && props.facultyList && (
         <Dropdown
           type={"Faculty"}
           options={props.facultyList.map((item) => item.code)}
@@ -128,7 +128,7 @@ function ResponsiveDrawer(props) {
           handleSelect={props.setSelectedFaculty}
         />
       )}
-      {props.currentPage === "new" && (
+      {props.currentPage === "priority" && (
         <TextField
           id="min-rank"
           label="min-rank"
@@ -143,7 +143,7 @@ function ResponsiveDrawer(props) {
           variant="filled"
         />
       )}
-      {props.currentPage === "new" && (
+      {props.currentPage === "priority" && (
         <TextField
           id="max-rank"
           label="max-rank"
@@ -223,9 +223,9 @@ function ResponsiveDrawer(props) {
               <NavLink
                 className={classes.navLink}
                 activeClassName={classes.activeLink}
-                to="/new"
+                to="/priority"
               >
-                <Typography variant="button">New</Typography>
+                <Typography variant="button">Priority</Typography>
               </NavLink>
             </Hidden>
           </Toolbar>
