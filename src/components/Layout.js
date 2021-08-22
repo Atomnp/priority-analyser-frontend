@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ResponsiveDrawer(props) {
-  const { window } = props;
+  const { window, location } = props;
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -226,6 +226,13 @@ function ResponsiveDrawer(props) {
                 to="/new"
               >
                 <Typography variant="button">New</Typography>
+              </NavLink>
+              <NavLink
+                className={classes.navLink}
+                activeClassName={classes.activeLink}
+                to="/faq"
+              >
+                <Typography variant="button">FAQ</Typography>
               </NavLink>
             </Hidden>
           </Toolbar>
