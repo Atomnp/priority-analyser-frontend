@@ -9,10 +9,21 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { Grid, Typography, createTheme } from "@material-ui/core";
+import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
 
+const useStyles = makeStyles((theme) => {
+  return {
+    root: {},
+    primaryColor: {
+      color: theme.palette.primary.light,
+      fontSize: theme.breakpoints.xs,
+    },
+  };
+});
 
 const CustomizedTooltip = ({ active, payload, label }) => {
-  // console.log(payload);
+  //   console.log(payload);
   if (active && payload && payload.length) {
     return (
       <div
@@ -24,11 +35,14 @@ const CustomizedTooltip = ({ active, payload, label }) => {
           whiteSpace: "nowrap",
         }}
       >
-        <p>{payload[0].payload["college_name"]}</p>
         <p>
           Admitted Students : {payload[0].payload["count"]}{" "}
+          {/* {payload[0].payload["collegeprogram__program__name"]} */}
           {/* {payload[0].payload["type"] === "R" ? "Regular" : "Full Fee"} */}
         </p>
+        <p>{payload[0].payload["college_name"]}</p>
+
+        <p>{payload[0].payload["program_name"]}</p>
       </div>
     );
   }
@@ -45,7 +59,19 @@ const colors = [
   "#64b5f6",
   "#90caf9",
 ];
+const theme = createTheme();
+
+theme.typography.h4 = {
+  fontSize: "1.2rem",
+  "@media (min-width:600px)": {
+    fontSize: "1rem",
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: "1.8rem",
+  },
+};
 const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
+  const classes = useStyles();
   /* transform data to the form that is easy to display in graph */
   const transformData = (data) => {
     // console.log("inside transformData", data);
@@ -59,9 +85,9 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
               : "collegeprogram__program";
           return {
             label: `${data[label]}`,
-            //   college_name: data["college_name"],
+            college_name: data["collegeprogram__college__name"],
             count: data["count"],
-            // program_name: data["program_name"],
+            program_name: data["collegeprogram__program__name"],
             fill: "#2196f3",
           };
         })
@@ -94,7 +120,7 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
     form.append("college", selectedCollege);
 
     api.post("/rank/", form).then((res) => {
-      console.log(res.data);
+      console.log("res data", res.data);
       setData(transformData(res.data));
       setDataFrameNo(0);
     });
@@ -119,36 +145,58 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
   return (
     currentFrame.length > 0 && (
       <div>
-        <ResponsiveContainer width="70%" height={400}>
-          {/* <h1>for rank =123</h1> */}
-          <BarChart
-            layout="vertical"
-            data={currentFrame}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <XAxis domain={[0, 200]} height={50} tickCount={10} type="number" />
-            <YAxis
-              type="category"
-              dataKey={"label"}
-              axisLine={false}
-              tickLine={false}
-              padding={{ right: 10 }}
-              width={100}
-              // orientation="right"
-            />
-            <Tooltip
-              // cursor={{ stroke: "#A0A0A0", strokeWidth: 1, fill: "#eeeeee" }}
-              content={<CustomizedTooltip />}
-            />
+        <Grid justify="center" container>
+          <Grid item xs={9}>
+            <ThemeProvider theme={theme}>
+              <Typography
+                align="center"
+                className={classes.primaryColor}
+                variant="h4"
+              >
+                {selectedCollege === "All"
+                  ? "All Colleges"
+                  : currentFrame[0]["college_name"]}
+              </Typography>
+            </ThemeProvider>
+          </Grid>
+          <Grid item xs={12} sm={10}>
+            <ResponsiveContainer width="100%" height={400}>
+              {/* <h1>for rank =123</h1> */}
+              <BarChart
+                layout="vertical"
+                data={currentFrame}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <XAxis
+                  domain={[0, 200]}
+                  height={50}
+                  tickCount={10}
+                  type="number"
+                />
+                <YAxis
+                  type="category"
+                  dataKey={"label"}
+                  axisLine={false}
+                  tickLine={false}
+                  padding={{ right: 10 }}
+                  width={100}
+                  // orientation="right"
+                />
+                <Tooltip
+                  // cursor={{ stroke: "#A0A0A0", strokeWidth: 1, fill: "#eeeeee" }}
+                  content={<CustomizedTooltip />}
+                />
 
-            <Bar radius={[10, 10, 10, 10]} barSize={15} dataKey="count" />
-          </BarChart>
-        </ResponsiveContainer>
+                <Bar radius={[10, 10, 10, 10]} barSize={15} dataKey="count" />
+              </BarChart>
+            </ResponsiveContainer>
+          </Grid>
+        </Grid>
 
         <div
           style={{
