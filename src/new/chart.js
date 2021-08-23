@@ -10,13 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const colorsMapping = {
-  "very high": "#69B34C",
-  high: "#ACB334",
-  critical: "#FAB733",
-  low: "#FF8E15",
-  "very low": "#FF4E11",
-};
+
 const CustomizedTooltip = ({ active, payload, label }) => {
   // console.log(payload);
   if (active && payload && payload.length) {
@@ -32,7 +26,7 @@ const CustomizedTooltip = ({ active, payload, label }) => {
       >
         <p>{payload[0].payload["college_name"]}</p>
         <p>
-          {payload[0].payload["count"]}{" "}
+          Admitted Students : {payload[0].payload["count"]}{" "}
           {/* {payload[0].payload["type"] === "R" ? "Regular" : "Full Fee"} */}
         </p>
       </div>
@@ -78,8 +72,8 @@ const MyBarChart = ({ selectedCollege, minRank, maxRank }) => {
 
   const noOfDataPerFrame = 8;
   let [data, setData] = useState([]);
-  /* data is shown "noOfDataFrame"(eg.10) at a time so this variable helps to determine which frame is that, 
-  for example initionally it is zero and if i press next then data that needs to be 
+  /* data is shown "noOfDataFrame"(eg.10) at a time so this variable helps to determine which frame is that,
+  for example initionally it is zero and if i press next then data that needs to be
   displayed are data no 10 to data no 20 */
   const [dataFrameNo, setDataFrameNo] = useState(0);
   let [currentFrame, setCurrentFrame] = useState([]);

@@ -90,8 +90,8 @@ const CustomizedTooltip = ({ active, payload, label }) => {
 const MyBarChart = ({ selectedCollege, selectedFaculty, rank }) => {
   const noOfDataPerFrame = 8;
   const [data, setData] = useState([]);
-  /* data is shown "noOfDataFrame"(eg.10) at a time so this variable helps to determine which frame is that, 
-  for example initionally it is zero and if i press next then data that needs to be 
+  /* data is shown "noOfDataFrame"(eg.10) at a time so this variable helps to determine which frame is that,
+  for example initionally it is zero and if i press next then data that needs to be
   displayed are data no 10 to data no 20 */
   const [dataFrameNo, setDataFrameNo] = useState(0);
   const [currentFrame, setCurrentFrame] = useState([]);

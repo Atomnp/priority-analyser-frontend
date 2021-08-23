@@ -9,9 +9,9 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-/* 
+/*
 source for default tooptip
-https://github.com/recharts/recharts/blob/master/src/component/DefaultTooltipContent.tsx 
+https://github.com/recharts/recharts/blob/master/src/component/DefaultTooltipContent.tsx
 */
 
 const CustomizedTooltip = ({ active, payload, label }) => {
@@ -31,7 +31,7 @@ const CustomizedTooltip = ({ active, payload, label }) => {
           {payload[0].payload["type"] === "R" ? "Regular" : "Full Fee"}
         </p>
         <p>{payload[0].payload["college_name"]}</p>
-        <p>{`lower= ${payload[0].payload["lower"]} , upper =  ${
+        <p>{`Rank Range: ${payload[0].payload["lower"]} - ${
           payload[0].payload["upper_minus_lower"] + payload[0].payload["lower"]
         }`}</p>
         {/* <p className="intro">{getIntroOfPage(label)}</p> */}
@@ -67,7 +67,7 @@ const RangeChart = ({ yaxis_data, currentFrame }) => {
           // cursor={{ stroke: "#A0A0A0", strokeWidth: 1, fill: "#eeeeee" }}
           content={<CustomizedTooltip />}
         />
-        {/* 
+        {/*
         <Legend /> */}
         <Bar
           // radius={[10, 0, 0, 10]}

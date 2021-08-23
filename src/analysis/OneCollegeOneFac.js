@@ -19,7 +19,8 @@ const useStyles = makeStyles((theme) => {
   return {
     root: {},
     primaryColor: {
-      color: theme.palette.primary.main,
+      // color: theme.palette.text.primary,
+      color: theme.palette.primary.light,
       fontSize: theme.breakpoints.xs,
     },
   };
@@ -63,6 +64,7 @@ const StyledTableCell = withStyles((theme) => ({
     fontSize: 14,
   },
 }))(TableCell);
+
 const StyledTableRow = withStyles((theme) => ({
   root: {
     "&:nth-of-type(odd)": {
@@ -70,6 +72,7 @@ const StyledTableRow = withStyles((theme) => ({
     },
   },
 }))(TableRow);
+
 export default function CustomizedTables({ selectedCollege, selectedFaculty }) {
   /* known bug: this page has horizonatl scroll we need to stop that */
   const classes = useStyles();
@@ -106,7 +109,14 @@ export default function CustomizedTables({ selectedCollege, selectedFaculty }) {
             className={classes.primaryColor}
             variant="h4"
           >
-            {payingData ? payingData.college + " " + payingData.program : ""}
+            {payingData ? payingData.college : ""}
+          </Typography>
+          <Typography
+            align="center"
+            className={classes.primaryColor}
+            variant="h5"
+          >
+            {payingData ? payingData.program : ""}
           </Typography>
         </ThemeProvider>
       </Grid>

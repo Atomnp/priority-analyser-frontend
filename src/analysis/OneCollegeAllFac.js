@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => {
   return {
     root: {},
     primaryColor: {
-      color: theme.palette.primary.main,
+      color: theme.palette.primary.light,
       fontSize: theme.breakpoints.xs,
     },
   };

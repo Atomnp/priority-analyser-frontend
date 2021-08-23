@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
   activeLink: {
     transitionDelay: "0.1s",
     color: theme.palette.grey[100],
-    backgroundColor: theme.palette.primary.light,
+    // backgroundColor: theme.palette.primary.light,
     borderBottom: "2px solid",
     borderBottomColor: theme.palette.secondary.light,
   },
@@ -217,21 +217,21 @@ function ResponsiveDrawer(props) {
                 activeClassName={classes.activeLink}
                 to="/predict"
               >
-                <Typography variant="button">Predict</Typography>
+                <Typography variant="button">Prediction</Typography>
               </NavLink>
               <NavLink
                 className={classes.navLink}
                 activeClassName={classes.activeLink}
                 to="/analyse"
               >
-                <Typography variant="button">Analyse</Typography>
+                <Typography variant="button">Cutoff Analysis</Typography>
               </NavLink>
               <NavLink
                 className={classes.navLink}
                 activeClassName={classes.activeLink}
                 to="/priority"
               >
-                <Typography variant="button">Priority</Typography>
+                <Typography variant="button">Rank Analysis</Typography>
               </NavLink>
               <NavLink
                 className={classes.navLink}
