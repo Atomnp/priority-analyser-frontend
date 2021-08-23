@@ -28,7 +28,7 @@ const CustomizedTooltip = ({ active, payload, label }) => {
       >
         <p>
           {payload[0].payload["program_name"]}{" "}
-          {" " + payload[0].payload["type"] === "R" ? "Regular" : "Full Fee"}
+          {payload[0].payload["type"] === "R" ? "Regular" : "Full Fee"}
         </p>
         <p>{payload[0].payload["college_name"]}</p>
         <p>{`lower= ${payload[0].payload["lower"]} , upper =  ${

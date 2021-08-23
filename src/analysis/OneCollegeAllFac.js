@@ -55,6 +55,7 @@ const transform = (data) => {
         /* to stack data as per required by graph */
         upper_minus_lower: data["upperLimit"] - data["lowerLimit"],
         seats: Number(data["seats"]),
+        type: data["type"],
         /* college here represents college code PUL,THA etc for pulchowk and thapathali respectively */
         college: `${data["college"]} ${data["type"]}`,
         fill: colors[i % 8],
@@ -91,6 +92,16 @@ const OneCollegeAllFac = ({ collegeName }) => {
       setDataFrameNo(0);
     });
   }, [collegeName]);
+
+  useEffect(() => {
+    setCurrentFrame(
+      data.slice(
+        0,
+        noOfDataPerFrame > data.length ? data.length : noOfDataPerFrame
+      )
+    );
+  }, [data]);
+
   return (
     <>
       <Grid justify="center" container>
