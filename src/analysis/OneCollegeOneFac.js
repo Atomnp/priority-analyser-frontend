@@ -128,7 +128,8 @@ export default function CustomizedTables({ selectedCollege, selectedFaculty }) {
                   if (
                     key !== "college" &&
                     key !== "program" &&
-                    key !== "cutinMarks"
+                    key !== "cutinMarks" &&
+                    key !== "type"
                   ) {
                     return (
                       <StyledTableRow key={key}>

@@ -83,12 +83,7 @@ const OneCollegeAllFac = ({ collegeName }) => {
     api.post("/analysis/", data).then((res) => {
       /* sanitize data in required form */
       setData(transform(res.data));
-      setCurrentFrame(
-        transform(res.data).slice(
-          0,
-          noOfDataPerFrame > data.length ? data.length : noOfDataPerFrame
-        )
-      );
+
       setDataFrameNo(0);
     });
   }, [collegeName]);

@@ -50,6 +50,7 @@ const transform = (data) => {
         /* to stack data as per required by graph */
         upper_minus_lower: data["upperLimit"] - data["lowerLimit"],
         seats: Number(data["seats"]),
+        type: data["type"],
         college: `${data["college"]} ${data["type"]}`,
         fill: colors[i % 8],
         college_name: data["college_name"],
@@ -73,16 +74,21 @@ const AllCollegeOneFac = ({ facultyName }) => {
     api.post("/analysis/", data).then((res) => {
       /* sanitize data in required form */
       setData(transform(res.data));
-      setCurrentFrame(
-        transform(res.data).slice(
-          0,
-          noOfDataPerFrame > data.length ? data.length : noOfDataPerFrame
-        )
-      );
+
       setDataFrameNo(0);
       // console.log("analysis data", res.data);
     });
   }, [facultyName]);
+
+  useEffect(() => {
+    setCurrentFrame(
+      data.slice(
+        0,
+        noOfDataPerFrame > data.length ? data.length : noOfDataPerFrame
+      )
+    );
+  }, [data]);
+
   return (
     <>
       <Grid justify="center" container>
