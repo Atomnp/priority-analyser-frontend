@@ -19,9 +19,9 @@ const renderActiveShape = (props, yaxis_data) => {
   const cos = Math.cos(-RADIAN * midAngle);
   const sx = cx + (outerRadius + 10) * cos;
   const sy = cy + (outerRadius + 10) * sin;
-  const mx = cx + (outerRadius + 30) * cos;
-  const my = cy + (outerRadius + 30) * sin;
-  const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+  const mx = cx + (outerRadius + 10) * cos;
+  const my = cy + (outerRadius + 18) * sin;
+  const ex = mx + (cos >= 0 ? 1 : -1) * 8;
   const ey = my;
   const textAnchor = cos >= 0 ? "start" : "end";
 
@@ -55,20 +55,13 @@ const renderActiveShape = (props, yaxis_data) => {
       />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
       <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
+        x={ex + (cos >= 0 ? 1 : -1) * 5}
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
+        fontSize={15}
+        style={{overflow: "visible"}}
       >{`Seats ${value}`}</text>
-      {/* <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
-        dy={18}
-        textAnchor={textAnchor}
-        fill="#999"
-      >
-        {`(Rate ${(percent * 100).toFixed(2)}%)`}
-      </text> */}
     </g>
   );
 };
@@ -89,8 +82,8 @@ const SeatPieChart = ({ yaxis_data, currentFrame }) => {
           data={currentFrame}
           cx="50%"
           cy="50%"
-          innerRadius={40}
-          outerRadius={100}
+          innerRadius={25}
+          outerRadius={70}
           fill="#8884d8"
           dataKey="seats"
           onMouseEnter={onPieEnter}

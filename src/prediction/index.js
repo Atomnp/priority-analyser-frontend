@@ -106,7 +106,7 @@ const PredictionPage = ({
             ></img>
           </div>
           <div className={classes.paper}>
-            <Typography variant="h4">Prediction</Typography>
+            <Typography variant="h4">IOE Rank Predictor</Typography>
             <Container maxWidth="sm">
               <Typography variant="caption">
                 BE Aspirants are required to enter their obtained/expected rank

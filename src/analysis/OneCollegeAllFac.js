@@ -37,14 +37,14 @@ theme.typography.h4 = {
 /* transform data to the form that is easy to display in graph */
 const transform = (data) => {
   const colors = [
-    "#a4752b",
-    "#fdd0a6",
-    "#0f27fd",
-    "#e0064d",
-    "#a5051a",
-    "#1e8231",
-    "#4f6ebf",
-    "#ad24d0",
+    "#1ABC9C",
+    "#16A085",
+    "#2ECC71",
+    "#27AE60",
+    "#3498DB",
+    "#2980B9",
+    "#9B59B6",
+    "#8E44AD",
   ];
 
   return data
