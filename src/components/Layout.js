@@ -233,6 +233,16 @@ function ResponsiveDrawer(props) {
               >
                 <Typography variant="button">Rank Analysis</Typography>
               </NavLink>
+
+              <NavLink
+                className={classes.navLink}
+                activeClassName={classes.activeLink}
+                to="/location"
+              >
+                <Typography variant="button">Location</Typography>
+              </NavLink>
+
+              
               <NavLink
                 className={classes.navLink}
                 activeClassName={classes.activeLink}

@@ -16,6 +16,7 @@ import Layout from "./components/Layout";
 import api from "./lib/api";
 import RangeFilter from "./new";
 import FAQ from "./faq";
+import Location from "./Location";
 
 function App() {
   const [darkState, setDarkState] = useState(false);
@@ -164,6 +165,13 @@ function App() {
                   selectedCollege={selectedCollege}
                 />
               </Route>
+
+              <Route path="/location" exact>
+                <Location
+                  setCurrentPage={setCurrentPage}
+                />
+              </Route>
+
               <Route path="/faq" exact>
                 <FAQ
                   setCurrentPage={setCurrentPage}
