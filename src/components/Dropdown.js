@@ -43,7 +43,7 @@ export default function CustomizedSelects({
           onChange={handleChange}
         >
           {options.map((item_name) => {
-            return <MenuItem value={item_name}>{item_name}</MenuItem>;
+            return <MenuItem key={item_name} value={item_name}>{item_name}</MenuItem>;
           })}
         </Select>
       </FormControl>

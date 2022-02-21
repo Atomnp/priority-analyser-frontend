@@ -45,6 +45,8 @@ function App() {
   const [minRank, setMinRank] = useState("100");
   const [maxRank, setMaxRank] = useState("500");
 
+  
+
   const [showresult, setShowresult] = useState(false);
   const [collegeList, setCollegeList] = useState([]);
   // const [yearList, setYearList] = useState([]);
@@ -57,6 +59,8 @@ function App() {
   const [isAnalysisPage, setIsAnalysisPage] = useState(false);
   // const [isNewPage, setIsNewPage] = useState(false);
   const [currentPage, setCurrentPage] = useState(false);
+
+
 
   const handleCollegeSelect = (college) => {
     setSelectedFaculty("All");
@@ -169,6 +173,8 @@ function App() {
               <Route path="/location" exact>
                 <Location
                   setCurrentPage={setCurrentPage}
+                  selectedCollege={selectedCollege}
+                  selectedFaculty={selectedFaculty}
                 />
               </Route>
 
