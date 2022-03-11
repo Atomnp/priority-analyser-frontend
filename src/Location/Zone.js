@@ -1,5 +1,5 @@
 import React from "react";
-import districtMapData from "./metadata/districtMapData";
+import zoneMapData from "./metadata/zoneMapData";
 import red from "@material-ui/core/colors/red";
 
 import Tooltip from "@material-ui/core/Tooltip";
@@ -20,23 +20,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DistrictMap({
+export default function ZoneMap({
   onMapClick,
   sectorClassName,
   containerClassName,
 
   stroke,
   strokeWidth,
-  districtData,
+  zoneData,
   maxValue,
 }) {
   const handleMapClick = (item) => {
     if (onMapClick) {
       onMapClick({
         name: item.name,
-        zip: item.zip,
-        province: item.province,
-        area: item.area,
+        code: item.code,
       });
     }
   };
@@ -49,18 +47,18 @@ export default function DistrictMap({
   // console.log(districtData)
   return (
     <div style={{ maxWidth: "100%" }} className={containerClassName || ""}>
-      <svg viewBox="0 0 1026.077 519.136">
-        <g transform="translate(-52.379 -15.971)">
-          {districtMapData.map((item, index) => {
+      <svg viewBox="0 0 799.861 460.414">
+        <g transform="translate(-0.251 6.456)">
+          {zoneMapData.map((item, index) => {
             // red[districtData[item.name.toLowerCase()] * 1000 / maxValue]
             // console.log(`rgba(${districtData[item.name.toLowerCase()]/maxValue * 255}, ${255}, ${255}, 1)`)
             // console.log(districtData[item.name.toLowerCase()]/maxValue)
             // console.log(districtData)
 
-            const numberOfStudents = districtData.hasOwnProperty(
+            const numberOfStudents = zoneData.hasOwnProperty(
               item.name.toLowerCase()
             )
-              ? districtData[item.name.toLowerCase()]
+              ? zoneData[item.name.toLowerCase()]
               : 0;
 
             const normalized = (numberOfStudents / maxValue) * 80;
@@ -79,6 +77,7 @@ export default function DistrictMap({
                   className={sectorClassName || ""}
                   style={{ cursor: "pointer", fill: color }}
                   key={index}
+                  transform={item.code === "MA" ? "translate(597 306.286)" : ""}
                   stroke={stroke || "#000"}
                   strokeWidth={strokeWidth || "1px"}
                   d={item.shape}
